@@ -118,8 +118,8 @@ GEM
     ffi (1.17.0-x86-linux-gnu)
     ffi (1.17.0-x86_64-darwin)
     ffi (1.17.0-x86_64-linux-gnu)
-    font-awesome-rails (4.7.0.8)
-      railties (>= 3.2, < 8.0)
+    font-awesome-sass (5.15.1)
+      sassc (>= 1.11)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
@@ -313,7 +313,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.4.1)
   capybara
   debug
-  font-awesome-rails (~> 4.7.0.5)
+  font-awesome-sass (~> 5.15.1)
   importmap-rails
   jbuilder
   puma (>= 5.0)
