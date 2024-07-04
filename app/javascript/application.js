@@ -1,10 +1,11 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-import "@hotwired/turbo-rails"
-import "controllers"
 import Rails from "@rails/ujs"
-Rails.start()
-console.log('Rails UJS Initialized')
+import Turbolinks from "turbolinks"
+import * as ActiveStorage from "@rails/activestorage"
+import "channels"
 
-const application = Application.start()
-const context = require.context("controllers", true, /\.js$/)
-application.load(definitionsFromContext(context))
+Rails.start()
+Turbolinks.start()
+ActiveStorage.start()
+
+console.log("Rails UJS is loaded");

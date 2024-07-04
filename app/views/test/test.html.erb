@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+</head>
+<body>
+  <h1>Test Page</h1>
+  <a href="<%= logout_path %>" data-method="delete" rel="nofollow" style="display:block; margin-top:20px;">Test Log Out</a>
+  <button onclick="sendDeleteRequest()">Manual Log Out</button>
+
+  <script>
+    function sendDeleteRequest() {
+      fetch('<%= logout_path %>', {
+        method: 'DELETE',
+        headers: {
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+      }).then(response => {
+        if (response.ok) {
+          window.location.href = '/';
+        } else {
+          console.error('Failed to log out');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

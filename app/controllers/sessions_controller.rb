@@ -14,7 +14,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    logout
+    reset_session
+    logout if defined?(logout)
     flash[:notice] = "Signed out successfully."
     redirect_to root_path
   end
