@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>GameMall</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>GameMall</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", media: "all" %>
-    <%= javascript_importmap_tags %>
-    <%= yield :stylesheets %>
-  </head>
+  <%= stylesheet_link_tag "application", media: "all" %>
+  <%= javascript_importmap_tags %>
+  <%= yield :stylesheets %>
+</head>
 
-  <body>
-    <%= render 'layouts/menu' %>
-    <div class="container">
-      <%= yield %>
-    </div>
+<body>
+  <%= render 'layouts/menu' %>
+  <div class="container">
+    <%= yield %>
+  </div>
 
-    <%= javascript_include_tag 'application' %>
-    <%= yield :javascripts %>
-  </body>
+  <%= javascript_include_tag 'application', type: 'module', crossorigin: 'anonymous' %>
+  <%= yield :javascripts %>
+</body>
 </html>
