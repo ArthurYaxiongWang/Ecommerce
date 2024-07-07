@@ -16,6 +16,8 @@ module Ecommerce
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w(assets tasks))
 
+    config.autoload_paths += %W[#{Rails.root}/lib]
+
     config.generators do |generator|
       generator.assets false
       generator.test_framework false

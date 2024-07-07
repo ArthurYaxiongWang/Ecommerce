@@ -71,3 +71,5 @@ gem 'bootstrap-sass', '~> 3.4.1'
 gem 'font-awesome-sass', '~> 5.15.1'
 
 gem 'sorcery', '~> 0.16.0'
+
+gem 'ancestry', '~> 4.0.0'
