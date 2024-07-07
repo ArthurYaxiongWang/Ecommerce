@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    get 'sessions/new'
     root 'sessions#new'
     resources :sessions
     resources :categories
