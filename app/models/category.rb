@@ -1,7 +1,8 @@
 class Category < ApplicationRecord
   validates :title, presence: { message: "Name can't be blank" }
+  validates :title, uniqueness: { message: "Name has already been taken" }
 
-  has_ancestry
+  has_ancestry orphan_strategy: :destroy
 
   has_many :products, dependent: :destroy
 
