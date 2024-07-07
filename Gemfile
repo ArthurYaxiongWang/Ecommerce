@@ -79,3 +79,5 @@ gem 'sorcery', '~> 0.16.0'
 gem 'ancestry', '~> 4.0.0'
 
 gem 'jquery-rails', '~> 4.4.0'
+
+gem 'will_paginate', '~> 3.3', '>= 3.3.1'
