@@ -7,10 +7,12 @@ class Admin::ProductsController < Admin::BaseController
 
   def new
     @product = Product.new
+    @root_categories = Category.roots
   end
 
   def create
     @product = Product.new(params.require(:product).permit!)
+    @root_categories = Category.roots
     if @product.save
       flash[:notice] = "Product created successfully!"
       redirect_to admin_products_path
@@ -20,11 +22,13 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def edit
+    @root_categories = Category.roots
     render action: :new
   end
 
   def update
     @product.attributes = params.require(:product).permit!
+    @root_categories = Category.roots
     if @product.save
       flash[:notice] = "Product updated successfully!"
       redirect_to admin_products_path

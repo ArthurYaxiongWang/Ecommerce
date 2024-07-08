@@ -2,12 +2,13 @@ class Product < ApplicationRecord
   validates :category_id, presence: { message: "Category can't be blank" }
   validates :title, presence: { message: "Title can't be blank" }
   validates :status, inclusion: { in: ["on", "off"] , message: "Status must be on or off" }
-  validates :amount, numericality: { only_integer: true, greater_than_or_equal_to: 0, message: "Amount must be an integer greater than or equal to 0" }
-  validates :amount, presence: { message: "Amount can't be blank" },
-    if: proc { |product| !product.amount.blank?}
+  validates :amount, numericality: { only_integer: true,
+    message: "Amount must be an integer" },
+    if: proc { |product| !product.amount.blank? }
+  validates :amount, presence: { message: "Amount can't be blank" }
   validates :msrp, presence: { message: "MSRP can't be blank" }
-  validates :msrp, numericality: { greater_than_or_equal_to: 0, message: "MSRP must be greater than or equal to 0" },
-    if: proc { |product| !product.msrp.blank?}
+  validates :msrp, numericality: { message: "MSRP must be a number" },
+    if: proc { |product| !product.msrp.blank? }
   validates :price, presence: { message: "Price can't be blank" }
   validates :price, numericality: { greater_than_or_equal_to: 0, message: "Price must be greater than or equal to 0" },
     if: proc { |product| !product.price.blank?}
@@ -16,6 +17,11 @@ class Product < ApplicationRecord
   belongs_to :category
 
   before_create :set_default_attrs
+
+  module Status
+    On = "on"
+    Off = "off"
+  end
 
   private
   def set_default_attrs
