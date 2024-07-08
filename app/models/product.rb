@@ -18,6 +18,8 @@ class Product < ApplicationRecord
 
   before_create :set_default_attrs
 
+  has_many :product_images, dependent: :destroy
+
   module Status
     On = "on"
     Off = "off"
