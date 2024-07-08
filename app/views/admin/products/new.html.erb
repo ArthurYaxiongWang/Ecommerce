@@ -1,0 +1,52 @@
+<div>
+  <h1><%= @product.new_record? ? "Create product" : "Edit product ##{params[:id]}" %></h1>
+</div>
+
+<div class="form-body">
+  <%= form_for @product, 
+    url: (@product.new_record? ? admin_products_path : admin_product_path(@product)), 
+    method: (@product.new_record? ? 'post' : 'put'), 
+    html: { class: 'form-horizontal' } do |f| %>
+    
+    <% unless @product.errors.blank? %>
+      <div class="alert alert-danger">
+        <ul class="list-unstyled">
+          <% @product.errors.messages.values.flatten.each do |error| %>
+            <li><i class="fa fa-exclamation-circle"></i> <%= error %></li>
+          <% end -%>
+        </ul>
+      </div>
+    <% end -%>
+
+    <div class="form-group">
+      <label for="ancestry" class="col-sm-2 control-label">Belongs to product:</label>
+      <div class="col-sm-5">
+        <select name="product[ancestry]">
+          <option></option>
+          <% @root_products.each do |product| %>
+            <% next if product == @product %>
+            <option value="<%= product.id %>" <%= @product.ancestry == product.id.to_s ? 'selected' : '' %>><%= product.title %></option>
+          <% end -%>
+        </select>
+        <p class="help-block">If left empty, the product will be created under the root product.</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="title" class="col-sm-2 control-label">Name:*</label>
+      <div class="col-sm-5">
+        <%= f.text_field :title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="weight" class="col-sm-2 control-label">Weight:</label>
+      <div class="col-sm-5">
+        <%= f.text_field :weight, class: "form-control" %> <p class="help-block">The larger the number, the higher the weight.</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-8">
+        <%= f.submit (@product.new_record? ? "Create product" : "Edit product"), class: "btn btn-default" %>
+      </div>
+    </div>
+  <% end -%>
+</div>
