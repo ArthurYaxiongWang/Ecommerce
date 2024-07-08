@@ -3,8 +3,5 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import Rails from "@rails/ujs"
 Rails.start()
-console.log('Rails UJS Initialized')
-
-const application = Application.start()
-const context = require.context("controllers", true, /\.js$/)
-application.load(definitionsFromContext(context))
+Turbolinks.start()
+ActiveStorage.start()
