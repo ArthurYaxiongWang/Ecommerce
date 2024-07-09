@@ -24,8 +24,8 @@
       <li>UUID: <%= @product.uuid %></li>
       <li>Stock: <%= @product.amount %></li>
     </ul>
-    <h3><strong>¥<%= @product.price %></strong> <span class="msrp">¥<%= @product.msrp %></span></h3>
-    <p>Amount: <input type="text" name="amount" value="1" /></p>
+    <h3><strong>$<%= @product.price %></strong> <span class="msrp">$<%= @product.msrp %></span></h3>
+    <p>Quantity: <input type="text" name="amount" value="1" /></p>
     <p><%= link_to "Add to cart", "#", class: "btn btn-default" %></p>
 
     <br />
