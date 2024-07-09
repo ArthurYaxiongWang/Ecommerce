@@ -18,9 +18,13 @@ class Product < ApplicationRecord
 
   has_many :product_images, dependent: :destroy
 
+  has_one :main_product_image, class_name: :ProductImage
+
   has_one_attached :image
 
   before_create :set_default_attrs
+
+  scope :onshelf, -> { where(status: Status::On) }
 
   module Status
     On = "on"
