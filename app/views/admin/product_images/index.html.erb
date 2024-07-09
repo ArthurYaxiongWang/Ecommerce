@@ -11,24 +11,20 @@
 </div>
 
 <div>
-  <table>
+  <table class="table table-striped">
   <thead>
     <tr>
       <th>ID</th>
       <th>Image</th>
-      <th>Actions</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <% @product_images.each do |product_image| %>
       <tr>
         <td><%= product_image.id %></td>
-        <td><%= image_tag url_for(product_image.image) if product_image.image.attached? %></td>
+        <td><%= image_tag product_image.image.variant(resize_to_limit: [200, 200]) if product_image.image.attached? %></td>
         <td>
-          <%= form_tag admin_product_product_image_path(@product, product_image), method: :put do %>
-            <input type="text" value="<%= product_image.weight %>" name="weight" />
-            <%= submit_tag 'Update' %>
-          <% end %>
           <%= link_to 'Delete', admin_product_product_image_path(@product, product_image), method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
       </tr>

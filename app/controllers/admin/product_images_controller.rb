@@ -11,30 +11,30 @@ class Admin::ProductImagesController < Admin::BaseController
       @product.product_images << ProductImage.new(image: image)
     end
 
-    redirect_to :back
+    redirect_back(fallback_location: admin_product_product_images_path(@product))
   end
 
   def destroy
     @product_image = @product.product_images.find(params[:id])
     if @product_image.destroy
-      flash[:notice] = "删除成功"
+      flash[:notice] = "Successfully deleted"
     else
-      flash[:notice] = "删除失败"
+      flash[:notice] = "Failed to delete"
     end
 
-    redirect_to :back
+    redirect_back(fallback_location: admin_product_product_images_path(@product))
   end
 
   def update
     @product_image = @product.product_images.find(params[:id])
     @product_image.weight = params[:weight]
     if @product_image.save
-      flash[:notice] = "修改成功"
+      flash[:notice] = "Successfully updated"
     else
-      flash[:notice] = "修改失败"
+      flash[:notice] = "Failed to update"
     end
 
-    redirect_to :back
+    redirect_back(fallback_location: admin_product_product_images_path(@product))
   end
 
   private
