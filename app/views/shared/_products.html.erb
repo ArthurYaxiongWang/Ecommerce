@@ -4,15 +4,15 @@
       <div class="thumbnail">
         <%= link_to product_path(product) do %>
           <% if product.product_images.any? %>
-             <%= image_tag product.product_images.first.medium_image, alt: product.title %>
+            <%= image_tag product.product_images.first.image.variant(resize_to_fill: [200, 200]), alt: product.title %>
           <% else %>
             <%= image_tag 'default_image.png', alt: product.title %>
           <% end %>
         <% end %>
         <div class="caption">
           <h4><%= link_to product.title, product_path(product), class: 'title' %></h4>
-          <p><strong><%= product.price %></strong> <span class="msrp"><%= product.msrp %></span></p>
-          <p><a href="#" class="btn btn-danger btn-sm" role="button">Add to cart</a></p>
+          <p><strong>$<%= product.price %></strong> <span class="msrp">$<%= product.msrp %></span></p>
+          <%= link_to 'Add to cart', '#', class: 'btn btn-danger btn-sm' %>
         </div>
       </div>
     </div>
