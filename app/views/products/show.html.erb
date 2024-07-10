@@ -26,7 +26,7 @@
     </ul>
     <h3><strong>$<%= @product.price %></strong> <span class="msrp">$<%= @product.msrp %></span></h3>
     <p>Quantity: <input type="text" name="amount" value="1" /></p>
-    <p><%= link_to "Add to cart", "#", class: "btn btn-default" %></p>
+    <p><%= link_to "Add to cart", "#", class: "bbtn btn-danger btn-sm" %></p>
 
     <br />
     <br />
@@ -38,4 +38,7 @@
       <%= @product.description.html_safe %>
     </div>
   </div>
+
+  <br />
+  <br />
 </div>
