@@ -81,3 +81,5 @@ gem 'ancestry', '~> 4.0.0'
 gem 'jquery-rails', '~> 4.4.0'
 
 gem 'kaminari', '~> 1.2', '>= 1.2.1'
+
+gem 'faker', '~> 2.15', '>= 2.15.1'
