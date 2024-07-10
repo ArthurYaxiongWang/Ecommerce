@@ -5,7 +5,9 @@
   <div class="col-lg-9">
     <ol class="breadcrumb">
       <li><a href="<%= root_path %>">Home</a></li>
-      <li class="active"><%= @product.category.parent.title %></li>
+      <% if @product.category.parent %>
+        <li class="active"><%= @product.category.parent.title %></li>
+      <% end %>
       <li><a href="<%= category_path @product.category %>"><%= @product.category.title %></a></li>
       <li class="active"><%= @product.title %></li>
     </ol>
@@ -14,7 +16,11 @@
       <% @product.product_images.each do |product_image| %>
         <div class="col-xs-6 col-md-3">
           <a href="#" class="thumbnail detail">
-            <%= image_tag product_image.image.variant(resize_to_limit: [200, 200]), alt: @product.title %>
+            <% if product_image.image.attached? %>
+              <%= image_tag product_image.image.variant(resize_to_limit: [200, 200]), alt: @product.title %>
+            <% else %>
+              <%= image_tag 'default_image.png', alt: @product.title %>
+            <% end %>
           </a>
         </div>
       <% end %>
