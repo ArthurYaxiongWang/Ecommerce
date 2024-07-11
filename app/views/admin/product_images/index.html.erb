@@ -23,7 +23,7 @@
     <% @product_images.each do |product_image| %>
       <tr>
         <td><%= product_image.id %></td>
-        <td><%= image_tag product_image.image.variant(resize_to_limit: [200, 200]) if product_image.image.attached? %></td>
+        <td><%= image_tag product_image.large_image, alt: @product.title %></td>
         <td>
           <%= link_to 'Delete', admin_product_product_image_path(@product, product_image), method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>

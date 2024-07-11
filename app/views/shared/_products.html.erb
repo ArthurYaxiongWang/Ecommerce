@@ -4,7 +4,7 @@
       <div class="thumbnail">
         <%= link_to product_path(product) do %>
           <% if product.product_images.any? %>
-            <%= image_tag product.product_images.first.image.variant(resize_to_fill: [200, 200]), alt: product.title %>
+            <%= image_tag product.product_images.first.medium_image, alt: product.title %>
           <% else %>
             <%= image_tag 'default_image.png', alt: product.title %>
           <% end %>

@@ -17,7 +17,7 @@
         <div class="col-xs-6 col-md-3">
           <a href="#" class="thumbnail detail">
             <% if product_image.image.attached? %>
-              <%= image_tag product_image.image.variant(resize_to_limit: [200, 200]), alt: @product.title %>
+              <%= image_tag product_image.medium_image, alt: @product.title %>
             <% else %>
               <%= image_tag 'default_image.png', alt: @product.title %>
             <% end %>

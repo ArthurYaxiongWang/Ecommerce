@@ -15,7 +15,7 @@ class ProductImage < ApplicationRecord
   end
 
   def large_image
-    image.variant(resize_to_limit: [960, nil]).processed
+    image.variant(resize_to_limit: [500, nil]).processed
   end
 
   private
