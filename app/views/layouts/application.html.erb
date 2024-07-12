@@ -23,7 +23,70 @@
   </div>
 
   <%= javascript_include_tag 'application', type: 'module', crossorigin: 'anonymous' %>
+  <script>
+    (function() {
+  
+  console.log('Inline javaScript loaded properly');
+  
+  $('.create-order-form').submit(function() {
+    var addressID = $('input[name="address_id"]:checked').val(),
+        $form = $(this);
+
+    if (!addressID) {
+      alert("Please select an address!");
+      return false;
+    } else {
+      $form.find('input[name="address_id"]').val(addressID);
+      return true;
+    }
+  })
+
+
+  $(document).ready(function() {
+  console.log('JavaScript loaded');
+
+  $('.add-to-cart-btn').on('click', function(event) {
+    event.preventDefault();
+
+    var $this = $(this),
+        $amount = $('input[name="amount"]'),
+        $prog = $this.find('i');
+
+    if ($amount.length > 0 && parseInt($amount.val()) <= 0) {
+      alert("Quantity must be greater than 1");
+      return false;
+    }
+
+    $.ajax({
+      url: $this.attr('href'),
+      method: 'post',
+      data: { product_id: $this.data('product-id'), amount: $amount.val() },
+      beforeSend: function() {
+        if (!$prog.hasClass('fa-spin')) {
+          $prog.addClass('fa-spin');
+        }
+        $prog.show();
+      },
+      success: function(data) {
+        if ($('#shopping_cart_modal').length > 0) {
+          $('#shopping_cart_modal').remove();
+        }
+
+        $('body').append(data);
+        $('#shopping_cart_modal').modal();
+      },
+      complete: function() {
+        $prog.hide();
+      }
+    });
+
+    return false;
+  });
+});
+
+})()
+
+  </script>
   <%= yield :javascripts %>
 </body>
 </html>
- 
