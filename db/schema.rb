@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_12_231252) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_13_181656) do
   create_table "abouts", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -120,6 +120,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_231252) do
     t.datetime "reset_password_email_sent_at"
     t.integer "access_count_to_reset_password_page", default: 0
     t.string "uuid"
+    t.string "encrypted_password", default: "", null: false
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.index ["activation_token"], name: "index_users_on_activation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"

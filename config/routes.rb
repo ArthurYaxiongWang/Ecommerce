@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
-  resources :users
-  resources :sessions
-  delete '/logout', to: 'sessions#destroy', as: :logout
+  devise_for :users
 
   resources :categories, only: [:show]
   resources :products, only: [:show] do
