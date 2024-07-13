@@ -1,8 +1,7 @@
 class ShoppingCartsController < ApplicationController
   def index
     fetch_home_data
-
-    @shopping_carts = ShoppingCart.by_user_uuid(session[:user_uuid]).order(id: "desc").includes(:product => [:main_product_image])
+    @shopping_carts = ShoppingCart.by_user_uuid(session[:user_uuid]).includes(:product).order(id: :desc)
   end
 
   def create
@@ -16,6 +15,17 @@ class ShoppingCartsController < ApplicationController
       amount: amount
     })
 
-    render layout: false
+    if @shopping_cart.errors.any?
+      Rails.logger.info @shopping_cart.errors.full_messages
+    end
+
+    redirect_to shopping_carts_path
+  end
+
+  protected
+
+  def fetch_home_data
+    @categories = Category.grouped_data
+    @shopping_cart_count = ShoppingCart.by_user_uuid(session[:user_uuid]).count
   end
 end

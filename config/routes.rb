@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :products, only: [:show] do
     get :search, on: :collection
   end
-  resources :shopping_carts
+  resources :shopping_carts, only: [:index, :create, :update, :destroy]
   resources :addresses do
     member do
       put :set_default_address
