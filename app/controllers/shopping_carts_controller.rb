@@ -1,4 +1,6 @@
 class ShoppingCartsController < ApplicationController
+  before_action :set_shopping_cart, only: [:update, :destroy]
+
   def index
     fetch_home_data
     @shopping_carts = ShoppingCart.by_user_uuid(session[:user_uuid]).includes(:product).order(id: :desc)
@@ -19,21 +21,21 @@ class ShoppingCartsController < ApplicationController
       Rails.logger.info @shopping_cart.errors.full_messages
     end
 
-    def update
-      new_amount = params[:shopping_cart][:amount].to_i
-      if @shopping_cart.update(amount: new_amount)
-        redirect_to shopping_carts_path, notice: 'Shopping cart updated successfully.'
-      else
-        redirect_to shopping_carts_path, alert: 'Failed to update the shopping cart.'
-      end
-    end
-
-    def destroy
-      @shopping_cart.destroy
-      redirect_to shopping_carts_path, notice: 'Item removed from the shopping cart.'
-    end
-
     redirect_to shopping_carts_path
+  end
+
+  def update
+    new_amount = params[:shopping_cart][:amount].to_i
+    if @shopping_cart.update(amount: new_amount)
+      redirect_to shopping_carts_path, notice: 'Shopping cart updated successfully.'
+    else
+      redirect_to shopping_carts_path, alert: 'Failed to update the shopping cart.'
+    end
+  end
+
+  def destroy
+    @shopping_cart.destroy
+    redirect_to shopping_carts_path, notice: 'Item removed from the shopping cart.'
   end
 
   protected
