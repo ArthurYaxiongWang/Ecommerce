@@ -20,7 +20,7 @@
     <%= yield %>
   </div>
 
-  <%= javascript_include_tag 'admin', type: 'module', crossorigin: 'anonymous' %>
+  <%= javascript_pack_tag 'admin', type: 'module', crossorigin: 'anonymous' %>
   <%= yield :javascripts %>
 </body>
 </html>

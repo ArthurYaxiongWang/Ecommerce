@@ -1,6 +1,41 @@
 @import 'variables';
 @import 'placeholders';
 
+.form-container {
+  max-width: 600px;
+  padding: $padding-base * $padding-multiplier;
+  margin: $padding-base / 2 auto;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .form-horizontal {
+    max-width: 500px;
+    margin: 0 auto;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: $padding-base;
+    }
+
+    .form-group label {
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .form-group .btn {
+      margin-top: 1rem;
+    }
+  }
+}
+
 .button-primary {
   @extend %button-style;
   background-color: $primary-color;
@@ -24,6 +59,7 @@
 input[type="text"], input[type="password"], input[type="email"] {
   @extend %input-style;
   width: 100%;
+  margin-bottom: $padding-base / 2;
 }
 
 .list-group-item {
@@ -70,9 +106,9 @@ a.add-to-cart-btn {
 }
 
 .container {
-  width: calc(100% - 20px); 
-  padding: $padding-base * $padding-multiplier; 
-  margin: $padding-base / 2; 
+  width: calc(100% - 20px);
+  padding: $padding-base * $padding-multiplier;
+  margin: $padding-base / 2;
 }
 
 @media (min-width: 1200px) {
