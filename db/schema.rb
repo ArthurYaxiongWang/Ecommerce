@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_13_181656) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_13_204905) do
   create_table "abouts", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -93,6 +93,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_181656) do
     t.index ["uuid"], name: "index_products_on_uuid"
   end
 
+  create_table "provinces", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "shopping_carts", force: :cascade do |t|
     t.integer "user_id"
     t.string "user_uuid"
@@ -123,8 +129,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_181656) do
     t.string "encrypted_password", default: "", null: false
     t.datetime "reset_password_sent_at", precision: nil
     t.datetime "remember_created_at", precision: nil
+    t.integer "province_id"
+    t.string "address"
     t.index ["activation_token"], name: "index_users_on_activation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["province_id"], name: "index_users_on_province_id"
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
@@ -132,4 +141,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_181656) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "users", "provinces"
 end

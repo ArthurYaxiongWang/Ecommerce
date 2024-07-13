@@ -1,6 +1,6 @@
 <h1>Your Shopping Cart</h1>
 
-<table class="table table-bordered table-striped">
+<table class="table">
   <thead>
     <tr>
       <th>Product</th>
@@ -12,29 +12,32 @@
   </thead>
   <tbody>
     <% @shopping_carts.each do |cart_item| %>
-      <tr>
-        <td><%= cart_item.product.title %></td>
-        <td>
-          <%= form_with(model: cart_item, url: shopping_cart_path(cart_item), method: :patch, local: true, class: "form-inline") do |f| %>
-            <div class="form-group">
-              <%= f.number_field :amount, value: cart_item.amount, min: 1, class: "form-control" %>
-            </div>
-            <div class="form-group">
-              <%= f.submit "Update", class: "btn btn-primary ml-2" %>
-            </div>
-          <% end %>
-        </td>
-        <td><%= number_to_currency(cart_item.product.price) %></td>
-        <td><%= number_to_currency(cart_item.amount * cart_item.product.price) %></td>
-        <td>
-          <%= link_to "Remove", shopping_cart_path(cart_item), method: :get, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
-        </td>
-      </tr>
+      <% if cart_item.product %>
+        <tr>
+          <td><%= cart_item.product.title %></td>
+          <td>
+            <%= form_with(model: cart_item, url: shopping_cart_path(cart_item), method: :patch, local: true, class: "form-inline") do |f| %>
+              <div class="form-group">
+                <%= f.number_field :amount, value: cart_item.amount, min: 1, class: "form-control" %>
+                <%= f.submit "Update", class: "btn btn-primary" %>
+              </div>
+            <% end %>
+          </td>
+          <td><%= number_to_currency(cart_item.product.price) %></td>
+          <td><%= number_to_currency(cart_item.product.price * cart_item.amount) %></td>
+          <td>
+            <%= link_to "Remove", shopping_cart_path(cart_item), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+          </td>
+        </tr>
+      <% else %>
+        <tr>
+          <td colspan="5">Product not available</td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
 
-<div class="shopping-cart-actions">
-  <%= link_to "Continue Shopping", root_path, class: "btn btn-info" %>
-  <%= link_to "Checkout", new_order_path, class: "btn btn-success" %>
+<div class="actions">
+  <%= link_to 'Continue Shopping', root_path, class: 'btn btn-default' %>
 </div>
