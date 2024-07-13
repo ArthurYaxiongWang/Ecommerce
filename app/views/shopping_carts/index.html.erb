@@ -1,6 +1,6 @@
 <h1>Your Shopping Cart</h1>
 
-<table class="table">
+<table class="table table-bordered table-striped">
   <thead>
     <tr>
       <th>Product</th>
@@ -15,9 +15,13 @@
       <tr>
         <td><%= cart_item.product.title %></td>
         <td>
-          <%= form_with(model: cart_item, url: shopping_cart_path(cart_item), method: :patch, local: true) do |f| %>
-            <%= f.number_field :amount, value: cart_item.amount, min: 1, class: "form-control" %>
-            <%= f.submit "Update", class: "btn btn-primary" %>
+          <%= form_with(model: cart_item, url: shopping_cart_path(cart_item), method: :patch, local: true, class: "form-inline") do |f| %>
+            <div class="form-group">
+              <%= f.number_field :amount, value: cart_item.amount, min: 1, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.submit "Update", class: "btn btn-primary ml-2" %>
+            </div>
           <% end %>
         </td>
         <td><%= number_to_currency(cart_item.product.price) %></td>
@@ -30,5 +34,7 @@
   </tbody>
 </table>
 
-<%= link_to "Continue Shopping", root_path, class: "btn btn-default" %>
-<%= link_to "Checkout", new_order_path, class: "btn btn-success" %>
+<div class="shopping-cart-actions">
+  <%= link_to "Continue Shopping", root_path, class: "btn btn-secondary" %>
+  <%= link_to "Checkout", new_order_path, class: "btn btn-success" %>
+</div>
