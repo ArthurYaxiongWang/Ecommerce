@@ -27,7 +27,7 @@
         <td><%= number_to_currency(cart_item.product.price) %></td>
         <td><%= number_to_currency(cart_item.amount * cart_item.product.price) %></td>
         <td>
-          <%= link_to "Remove", shopping_cart_path(cart_item), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+          <%= link_to "Remove", shopping_cart_path(cart_item), method: :get, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
         </td>
       </tr>
     <% end %>
