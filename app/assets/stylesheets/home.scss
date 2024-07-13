@@ -1,3 +1,4 @@
+// Your existing styles
 .list-group-item {
   label {
     font-weight: normal;
@@ -11,9 +12,11 @@
     }
   }
 }
+
 .msrp {
   text-decoration: line-through;
 }
+
 .thumbnail {
   &.detail {
     height: auto;
@@ -32,6 +35,7 @@
     }
   }
 }
+
 a.add-to-cart-btn {
   i {
     display: none;
@@ -40,6 +44,52 @@ a.add-to-cart-btn {
 
 @media (min-width: 1200px) {
   .navbar-form .form-control.search-input {
-    width: 400px
+    width: 400px;
+  }
+}
+
+// Navbar specific styles
+.navbar {
+  .navbar-header {
+    float: left;
+    .navbar-brand {
+      margin-right: 20px;
+    }
+  }
+
+  .navbar-toggle {
+    margin-right: 15px;
+  }
+
+  .navbar-nav {
+    &.navbar-right {
+      float: right;
+    }
+    > li > a {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      line-height: 20px;
+      color: #777;
+
+      &:hover,
+      &:focus {
+        color: #333;
+        background-color: transparent;
+      }
+    }
+  }
+
+  .navbar-form {
+    margin-left: 20px;
+    .form-group {
+      display: inline-block;
+      margin-bottom: 0;
+      vertical-align: middle;
+      .form-control {
+        display: inline-block;
+        width: auto;
+        vertical-align: middle;
+      }
+    }
   }
 }

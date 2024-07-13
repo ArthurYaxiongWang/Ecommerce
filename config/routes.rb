@@ -47,5 +47,10 @@ Rails.application.routes.draw do
     resources :products do
       resources :product_images, only: [:index, :create, :destroy, :update]
     end
+    resources :abouts, only: [:edit, :update]
+    resources :contacts, only: [:edit, :update]
   end
+
+  get '/about', to: 'abouts#show', as: :about
+  get '/contact', to: 'contacts#show', as: :contact
 end
