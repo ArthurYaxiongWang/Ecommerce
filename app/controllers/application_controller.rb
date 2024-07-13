@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   before_action :set_browser_uuid
 
+  before_action :set_shopping_cart_count
+
   protected
   def fetch_home_data
     @categories = Category.grouped_data
@@ -22,10 +24,14 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    updata_browser_uuid uuid
+    update_browser_uuid uuid
   end
 
-  def updata_browser_uuid uuid
+  def update_browser_uuid uuid
     session[:user_uuid] = cookies.permanent['user_uuid'] = uuid
+  end
+
+  def set_shopping_cart_count
+    @shopping_cart_count = ShoppingCart.by_user_uuid(session[:user_uuid]).count
   end
 end

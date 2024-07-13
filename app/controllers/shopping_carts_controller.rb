@@ -19,10 +19,28 @@ class ShoppingCartsController < ApplicationController
       Rails.logger.info @shopping_cart.errors.full_messages
     end
 
+    def update
+      new_amount = params[:shopping_cart][:amount].to_i
+      if @shopping_cart.update(amount: new_amount)
+        redirect_to shopping_carts_path, notice: 'Shopping cart updated successfully.'
+      else
+        redirect_to shopping_carts_path, alert: 'Failed to update the shopping cart.'
+      end
+    end
+
+    def destroy
+      @shopping_cart.destroy
+      redirect_to shopping_carts_path, notice: 'Item removed from the shopping cart.'
+    end
+
     redirect_to shopping_carts_path
   end
 
   protected
+
+  def set_shopping_cart
+    @shopping_cart = ShoppingCart.find(params[:id])
+  end
 
   def fetch_home_data
     @categories = Category.grouped_data

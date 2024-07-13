@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :sessions
-  delete '/logout' => 'sessions#destroy', as: :logout
+  delete '/logout', to: 'sessions#destroy', as: :logout
 
   resources :categories, only: [:show]
   resources :products, only: [:show] do
