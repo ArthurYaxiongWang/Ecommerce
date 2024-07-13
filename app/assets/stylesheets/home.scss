@@ -1,4 +1,31 @@
-// Your existing styles
+@import 'variables';
+@import 'placeholders';
+
+.button-primary {
+  @extend %button-style;
+  background-color: $primary-color;
+  color: white;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.button-secondary {
+  @extend %button-style;
+  background-color: $secondary-color;
+  color: white;
+
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+  }
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+  @extend %input-style;
+  width: 100%;
+}
+
 .list-group-item {
   label {
     font-weight: normal;
@@ -22,13 +49,13 @@
     height: auto;
   }
   a.title {
-    color: #333;
+    color: $primary-color;
   }
 }
 
 .media {
   &.shopping-cart-row {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid $border-color;
 
     &:last-child {
       border-bottom: 0;
@@ -42,9 +69,15 @@ a.add-to-cart-btn {
   }
 }
 
+.container {
+  width: calc(100% - 20px); 
+  padding: $padding-base * $padding-multiplier; 
+  margin: $padding-base / 2; 
+}
+
 @media (min-width: 1200px) {
   .navbar-form .form-control.search-input {
-    width: 400px;
+    width: $search-input-width;
   }
 }
 
@@ -69,11 +102,11 @@ a.add-to-cart-btn {
       padding-top: 15px;
       padding-bottom: 15px;
       line-height: 20px;
-      color: #777;
+      color: $secondary-color;
 
       &:hover,
       &:focus {
-        color: #333;
+        color: $primary-color;
         background-color: transparent;
       }
     }
