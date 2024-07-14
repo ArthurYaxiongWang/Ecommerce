@@ -88,4 +88,6 @@ gem 'rails-ujs', '~> 0.1.0'
 
 gem 'devise', '~> 4.8', '>= 4.8.1'
 
-gem  'webpacker', '~> 5.4', '>= 5.4.3'
+gem 'webpacker', '~> 5.4', '>= 5.4.3'
+
+gem 'pg', '~> 1.2', '>= 1.2.3'
