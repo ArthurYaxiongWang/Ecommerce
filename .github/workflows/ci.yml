@@ -39,6 +39,21 @@ jobs:
       - name: Print environment variables
         run: env
 
+      - name: Print working directory
+        run: pwd
+
+      - name: List files in root directory
+        run: ls -la
+
+      - name: List files in config directory
+        run: ls -la config
+
+      - name: Check Ruby version
+        run: ruby -v
+
+      - name: Check Bundler version
+        run: bundler -v
+
       - name: Set up database
         run: |
           cp config/database.yml.ci config/database.yml
