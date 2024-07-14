@@ -17,11 +17,6 @@
         <li><a href="<%= edit_admin_about_path(About.first_or_create) %>">About</a></li>
         <li><a href="<%= edit_admin_contact_path(Contact.first_or_create) %>">Contact</a></li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <% if logged_in? %>
-          <li><%= link_to "Log Out", logout_path, method: :delete %></li>
-        <% end %>
-      </ul>
     </div>
   </div>
 </nav>
