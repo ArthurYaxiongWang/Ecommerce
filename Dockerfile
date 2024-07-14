@@ -7,6 +7,7 @@ RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 # Set environment variables
 ENV RAILS_ENV production
 ENV BUNDLE_PATH /bundle
+ENV SECRET_KEY_BASE your_secret_key_base_here
 
 # Create and set the working directory
 RUN mkdir /app
