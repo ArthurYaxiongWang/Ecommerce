@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
   belongs_to :province, optional: true
 
-  has_many :addresses, -> { where(address_type: Address::ADDRESS_TYPE::User) }
+  has_many :addresses, -> { where(address_type: Address::AddressType::User).order("id desc") }
 
   belongs_to :default_address, class_name: :Address
 
