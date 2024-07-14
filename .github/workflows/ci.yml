@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -35,6 +35,9 @@ jobs:
         run: |
           gem install bundler
           bundle install
+
+      - name: Print environment variables
+        run: env
 
       - name: Set up database
         run: |
@@ -52,7 +55,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v1
