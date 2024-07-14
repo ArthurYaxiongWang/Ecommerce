@@ -1,0 +1,29 @@
+<h1>Confirm order</h1>
+<div class="row">
+  <div class="container">
+    <div class="page-header">
+      <h4> Delivery address: </h4>
+    </div>
+    <div id="address_list">
+    </div>
+
+    <div class="page-header">
+      <h4> Items: </h4>
+    </div>
+    
+
+    <div class="clearfix"></div>
+    <br />
+    <br />
+    <br />
+    <br />
+  </div>
+</div>
+
+<%= content_for :javascripts do %>
+  <script>
+    $.get('/addresses', function(data) {
+      $('#address_list').html(data);
+    })
+  </script>
+<% end %>

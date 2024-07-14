@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_13_204905) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_14_164044) do
   create_table "abouts", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -44,6 +44,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_204905) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "addresses", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "address_type"
+    t.string "contact_name"
+    t.string "cellphone"
+    t.string "address"
+    t.string "zip_code"
+    t.integer "province_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["province_id"], name: "index_addresses_on_province_id"
+    t.index ["user_id", "address_type"], name: "index_addresses_on_user_id_and_address_type"
+    t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -131,7 +146,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_204905) do
     t.datetime "remember_created_at", precision: nil
     t.integer "province_id"
     t.string "address"
+    t.integer "default_address_id"
     t.index ["activation_token"], name: "index_users_on_activation_token"
+    t.index ["default_address_id"], name: "index_users_on_default_address_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["province_id"], name: "index_users_on_province_id"
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
@@ -141,5 +158,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_204905) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "addresses", "provinces"
+  add_foreign_key "addresses", "users"
+  add_foreign_key "users", "addresses", column: "default_address_id"
   add_foreign_key "users", "provinces"
 end

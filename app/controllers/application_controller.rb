@@ -7,6 +7,13 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def authenticate_user
+    unless user_signed_in?
+      flash[:notice] = "Please sign in first."
+      redirect_to new_user_session_path
+    end
+  end
+
   def fetch_home_data
     @categories = Category.grouped_data
     @shopping_cart = ShoppingCart.by_user_uuid(session[:user_uuid]).count
