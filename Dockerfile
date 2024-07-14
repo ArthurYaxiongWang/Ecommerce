@@ -11,9 +11,9 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 
 # Set environment variables
 ARG SECRET_KEY_BASE
-ENV RAILS_ENV production
-ENV BUNDLE_PATH /bundle
-ENV SECRET_KEY_BASE ${SECRET_KEY_BASE}
+ENV RAILS_ENV=production
+ENV BUNDLE_PATH=/bundle
+ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
 
 # Create and set the working directory
 RUN mkdir /app
