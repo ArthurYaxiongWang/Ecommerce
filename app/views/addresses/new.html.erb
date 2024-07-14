@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">Delivery Address</h2>
+        </div>
+        <div class="panel-body">
+          <%= form_for @address, url: (@address.new_record? ? addresses_path : address_path(@address)), method: (@address.new_record? ? :post : :put), html: { class: "form-horizontal address-form" } do |f| %>
+            <% unless @address.errors.blank? %>
+              <div class="alert alert-danger">
+                <ul>
+                  <% @address.errors.messages.values.flatten.each do |error| %>
+                    <li><%= error %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+            <div class="form-group">
+              <label for="address" class="col-sm-2 control-label">Detailed Address:*</label>
+              <div class="col-sm-10">
+                <%= f.text_area :address, class: "form-control" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="contact_name" class="col-sm-2 control-label">Name:*</label>
+              <div class="col-sm-10">
+                <%= f.text_field :contact_name, class: "form-control" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cellphone" class="col-sm-2 control-label">Cellphone:*</label>
+              <div class="col-sm-10">
+                <%= f.text_field :cellphone, class: "form-control" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="zip_code" class="col-sm-2 control-label">Postcode:</label>
+              <div class="col-sm-10">
+                <%= f.text_field :zip_code, class: "form-control" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="province_id" class="col-sm-2 control-label">Province:*</label>
+              <div class="col-sm-10">
+                <%= f.collection_select :province_id, Province.all, :id, :name, prompt: "Select Province", class: "form-control" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <label>
+                  <input type="checkbox" name="address[set_as_default]" <%= 'checked' if current_user.default_address == @address %> value="1" /> Set as default
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <%= f.submit "Save", class: "btn btn-primary" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
