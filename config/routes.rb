@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     get :search, on: :collection
   end
   resources :shopping_carts, only: [:index, :create, :update, :destroy]
-  resources :addresses, except: [:show] do
+  resources :addresses do
     member do
       put :set_default_address
     end

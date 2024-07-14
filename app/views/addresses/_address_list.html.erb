@@ -11,12 +11,12 @@
           <%= address.province.name %>
         </label>
         <div>
-          <%= link_to "Edit", edit_address_path(address), remote: true, class: "inline edit-address-btn" %>
-          <%= link_to "Delete", address_path(address), remote: true, method: 'delete', "data-confirm": "Are you sure?", class: "remove-address-btn inline" %>
+          <%= link_to "Edit", edit_address_path(address), class: "inline edit-address-btn" %>
+          <%= link_to "Delete", address_path(address), method: 'delete', "data-confirm": "Are you sure?", class: "remove-address-btn inline" %>
           <% if current_user.default_address == address %>
             <span class="default_address">Default Address</span>
           <% else %>
-            <%= link_to "Set as default", set_default_address_address_path(address), remote: true, method: 'put', class: "set-default-address-btn inline" %>
+            <%= link_to "Set as default", set_default_address_address_path(address), method: 'put', class: "set-default-address-btn inline" %>
           <% end %>
         </div> 
       </li>

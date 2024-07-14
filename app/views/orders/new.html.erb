@@ -3,7 +3,7 @@
   <div class="container">
     <div class="page-header">
       <h4>Delivery address:</h4>
-      <%= link_to "Manage Addresses", addresses_path, class: "btn btn-info btn-xs manage-addresses-btn", remote: true %>
+      <%= link_to "Manage Addresses", addresses_path, class: "btn btn-info btn-xs manage-addresses-btn" %>
     </div>
     <div id="address_list">
       <%= render partial: 'addresses/address_list', locals: { addresses: @addresses, current_user: current_user } %>
