@@ -1,9 +1,9 @@
 class ShoppingCartsController < ApplicationController
-  before_action :set_shopping_cart, only: [:update, :destroy]
+  before_action :set_cart_item, only: [:update, :destroy]
 
   def index
     fetch_home_data
-    @shopping_carts = ShoppingCart.by_user_uuid(session[:user_uuid]).includes(:product).order(id: :desc)
+    @shopping_cart = ShoppingCart.by_user_uuid(session[:user_uuid]).includes(cart_items: :product).first
   end
 
   def create
@@ -11,22 +11,25 @@ class ShoppingCartsController < ApplicationController
     amount = amount <= 0 ? 1 : amount
 
     @product = Product.find(params[:product_id])
-    @shopping_cart = ShoppingCart.create_or_update({
+    @cart_item = ShoppingCart.create_or_update({
       user_uuid: session[:user_uuid],
+      user_id: current_user.id,
       product_id: params[:product_id],
-      amount: amount
+      quantity: amount
     })
 
-    if @shopping_cart.errors.any?
-      Rails.logger.info @shopping_cart.errors.full_messages
+    if @cart_item.errors.any?
+      Rails.logger.info @cart_item.errors.full_messages
     end
 
+    fetch_home_data  # Update the shopping cart count after adding an item
     redirect_to shopping_carts_path
   end
 
   def update
-    new_amount = params[:shopping_cart][:amount].to_i
-    if @shopping_cart.update(amount: new_amount)
+    new_amount = params[:cart_item][:quantity].to_i
+    if @cart_item.update(quantity: new_amount)
+      fetch_home_data  # Update the shopping cart count after updating an item
       redirect_to shopping_carts_path, notice: 'Shopping cart updated successfully.'
     else
       redirect_to shopping_carts_path, alert: 'Failed to update the shopping cart.'
@@ -34,18 +37,23 @@ class ShoppingCartsController < ApplicationController
   end
 
   def destroy
-    @shopping_cart.destroy
+    @cart_item.destroy
+    fetch_home_data  # Update the shopping cart count after removing an item
     redirect_to shopping_carts_path, notice: 'Item removed from the shopping cart.'
   end
 
   protected
 
-  def set_shopping_cart
-    @shopping_cart = ShoppingCart.find(params[:id])
+  def set_cart_item
+    @cart_item = CartItem.find(params[:id])
   end
 
   def fetch_home_data
     @categories = Category.grouped_data
-    @shopping_cart_count = ShoppingCart.by_user_uuid(session[:user_uuid]).count
+    if session[:user_uuid].present?
+      @shopping_cart_count = ShoppingCart.by_user_uuid(session[:user_uuid]).joins(:cart_items).sum('cart_items.quantity')
+    else
+      @shopping_cart_count = 0
+    end
   end
 end

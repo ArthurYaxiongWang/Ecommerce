@@ -19,6 +19,10 @@ class Address < ApplicationRecord
     Order = "order"
   end
 
+  def full_address
+    "#{address}, #{province.name}, #{cellphone}"
+  end
+
   private
 
   def set_as_default_address

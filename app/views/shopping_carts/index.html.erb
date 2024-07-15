@@ -11,29 +11,35 @@
     </tr>
   </thead>
   <tbody>
-    <% @shopping_carts.each do |cart_item| %>
-      <% if cart_item.product %>
-        <tr>
-          <td><%= cart_item.product.title %></td>
-          <td>
-            <%= form_with(model: cart_item, url: shopping_cart_path(cart_item), method: :patch, local: true, class: "form-inline") do |f| %>
-              <div class="form-group">
-                <%= f.number_field :amount, value: cart_item.amount, min: 1, class: "form-control" %>
-                <%= f.submit "Update", class: "btn btn-primary" %>
-              </div>
-            <% end %>
-          </td>
-          <td><%= number_to_currency(cart_item.product.price) %></td>
-          <td><%= number_to_currency(cart_item.product.price * cart_item.amount) %></td>
-          <td>
-            <%= link_to "Remove", shopping_cart_path(cart_item), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
-          </td>
-        </tr>
-      <% else %>
-        <tr>
-          <td colspan="5">Product not available</td>
-        </tr>
+    <% if @shopping_cart && @shopping_cart.cart_items.any? %>
+      <% @shopping_cart.cart_items.each do |cart_item| %>
+        <% if cart_item.product %>
+          <tr>
+            <td><%= cart_item.product.title %></td>
+            <td>
+              <%= form_with(model: cart_item, url: shopping_cart_path(cart_item), method: :patch, local: true, class: "form-inline") do |f| %>
+                <div class="form-group">
+                  <%= f.number_field :quantity, value: cart_item.quantity, min: 1, class: "form-control" %>
+                  <%= f.submit "Update", class: "btn btn-primary" %>
+                </div>
+              <% end %>
+            </td>
+            <td><%= number_to_currency(cart_item.product.price) %></td>
+            <td><%= number_to_currency(cart_item.total_price) %></td>
+            <td>
+              <%= link_to "Remove", shopping_cart_path(cart_item), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+            </td>
+          </tr>
+        <% else %>
+          <tr>
+            <td colspan="5">Product not available</td>
+          </tr>
+        <% end %>
       <% end %>
+    <% else %>
+      <tr>
+        <td colspan="5">Your shopping cart is empty</td>
+      </tr>
     <% end %>
   </tbody>
 </table>

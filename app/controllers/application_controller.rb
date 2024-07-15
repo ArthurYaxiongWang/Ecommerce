@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
 
   before_action :fetch_home_data
   before_action :set_browser_uuid
-  before_action :set_shopping_cart_count
 
   protected
 
@@ -16,7 +15,11 @@ class ApplicationController < ActionController::Base
 
   def fetch_home_data
     @categories = Category.grouped_data
-    @shopping_cart = ShoppingCart.by_user_uuid(session[:user_uuid]).count
+    if session[:user_uuid].present?
+      @shopping_cart_count = ShoppingCart.by_user_uuid(session[:user_uuid]).joins(:cart_items).sum('cart_items.quantity')
+    else
+      @shopping_cart_count = 0
+    end
   end
 
   def set_browser_uuid
@@ -35,9 +38,5 @@ class ApplicationController < ActionController::Base
 
   def update_browser_uuid(uuid)
     session[:user_uuid] = cookies.permanent['user_uuid'] = uuid
-  end
-
-  def set_shopping_cart_count
-    @shopping_cart_count = ShoppingCart.by_user_uuid(session[:user_uuid]).count
   end
 end

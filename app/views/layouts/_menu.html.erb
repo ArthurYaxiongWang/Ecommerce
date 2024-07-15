@@ -26,7 +26,11 @@
         <button type="submit" class="btn btn-default">Search</button>
       <% end %>
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Shopping Cart(#{@shopping_cart_count})", shopping_carts_path %></li>
+        <li class="nav-item">
+      <a class="nav-link" href="<%= shopping_carts_path %>">
+        Shopping Cart(<%= @shopping_cart_count %>)
+      </a>
+    </li>
         <% if user_signed_in? %>
           <li><a href="#">Welcome, <%= current_user.username %></a></li>
           <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete, data:{confirm: "Are you sure?"}%></li>
