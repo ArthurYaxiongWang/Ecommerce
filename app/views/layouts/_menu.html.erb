@@ -16,12 +16,12 @@
         <li><a href="<%= about_path %>">About</a></li>
         <li><a href="<%= contact_path %>">Contact</a></li>
       </ul>
-      <%= form_tag search_products_path, method: :get, class: "navbar-form navbar-left" do %>
+      <%= form_with url: search_products_path, method: :get, class: "navbar-form navbar-left", role: "search" do %>
         <div class="form-group">
-          <% if @category %>
-            <input type="hidden" name="category_id" value="<%= @category.id %>" />
-          <% end %>
-          <input type="text" name="w" value="<%= params[:w] %>" class="form-control search-input" placeholder="<%= @category ? "Search under #{@category.title} ..." : 'Search the whole store...' %>">
+          <%= text_field_tag :w, params[:w], class: "form-control", placeholder: "Search the whole store..." %>
+        </div>
+        <div class="form-group">
+          <%= select_tag :category_id, options_from_collection_for_select(Category.where.not(ancestry: nil), :id, :title, params[:category_id]), include_blank: "All Categories", class: "form-control" %>
         </div>
         <button type="submit" class="btn btn-default">Search</button>
       <% end %>
@@ -29,10 +29,10 @@
         <li><%= link_to "Shopping Cart(#{@shopping_cart_count})", shopping_carts_path %></li>
         <% if user_signed_in? %>
           <li><a href="#">Welcome, <%= current_user.username %></a></li>
-          <li><%= link_to "Log Out", destroy_user_session_path, method: :delete %></li>
+          <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete, data:{confirm: "Are you sure?"}%></li>
         <% else %>
           <li><a href="<%= new_user_registration_path %>">Sign Up</a></li>
-          <li><a href="<%= new_user_session_path %>">Log in</a></li>
+          <li><a href="<%= new_user_session_path %>">Sign in</a></li>
         <% end %>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
