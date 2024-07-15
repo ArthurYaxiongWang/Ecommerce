@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_14_164044) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_15_115001) do
   create_table "abouts", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -79,13 +79,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_14_164044) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "produdct_id"
+    t.integer "address_id"
+    t.string "order_no"
+    t.integer "amount"
+    t.decimal "total_price", precision: 10, scale: 2
+    t.datetime "paid_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_no"], name: "index_orders_on_order_no", unique: true
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "product_images", force: :cascade do |t|
-    t.integer "product_id"
-    t.integer "weight", default: 0
-    t.string "image_file_name"
-    t.string "image_content_type"
-    t.integer "image_file_size"
-    t.datetime "image_updated_at"
+    t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_product_images_on_product_id"
@@ -105,7 +114,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_14_164044) do
     t.index ["category_id"], name: "index_products_on_category_id"
     t.index ["status", "category_id"], name: "index_products_on_status_and_category_id"
     t.index ["title"], name: "index_products_on_title"
-    t.index ["uuid"], name: "index_products_on_uuid"
+    t.index ["uuid"], name: "index_products_on_uuid", unique: true
   end
 
   create_table "provinces", force: :cascade do |t|
@@ -160,6 +169,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_14_164044) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "provinces"
   add_foreign_key "addresses", "users"
+  add_foreign_key "product_images", "products"
   add_foreign_key "users", "addresses", column: "default_address_id"
   add_foreign_key "users", "provinces"
 end
