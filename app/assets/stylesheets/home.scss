@@ -4,11 +4,11 @@
 .form-container {
   max-width: 600px;
   padding: $padding-base * $padding-multiplier;
-  margin: $padding-base / 2 auto;
+  margin: ($padding-base / 2) auto;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: $box-shadow-light;
 
   .form-horizontal {
     max-width: 500px;
@@ -56,7 +56,9 @@
   }
 }
 
-input[type="text"], input[type="password"], input[type="email"] {
+input[type="text"],
+input[type="password"],
+input[type="email"] {
   @extend %input-style;
   width: 100%;
   margin-bottom: $padding-base / 2;
@@ -84,6 +86,7 @@ input[type="text"], input[type="password"], input[type="email"] {
   &.detail {
     height: auto;
   }
+
   a.title {
     color: $primary-color;
   }
@@ -108,7 +111,7 @@ a.add-to-cart-btn {
 .container {
   width: calc(100% - 20px);
   padding: $padding-base * $padding-multiplier;
-  margin: $padding-base / 2;
+  margin: ($padding-base / 2);
 }
 
 @media (min-width: 1200px) {
@@ -117,10 +120,11 @@ a.add-to-cart-btn {
   }
 }
 
-// Navbar specific styles
+// Navbar styles
 .navbar {
   .navbar-header {
     float: left;
+
     .navbar-brand {
       margin-right: 20px;
     }
@@ -134,6 +138,7 @@ a.add-to-cart-btn {
     &.navbar-right {
       float: right;
     }
+
     > li > a {
       padding-top: 15px;
       padding-bottom: 15px;
@@ -150,10 +155,12 @@ a.add-to-cart-btn {
 
   .navbar-form {
     margin-left: 20px;
+
     .form-group {
       display: inline-block;
       margin-bottom: 0;
       vertical-align: middle;
+
       .form-control {
         display: inline-block;
         width: auto;
