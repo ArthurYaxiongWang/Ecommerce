@@ -21,7 +21,7 @@
           <% if @category %>
             <input type="hidden" name="category_id" value="<%= @category.id %>" />
           <% end %>
-          <input type="text" name="w" value="<%= params[:w] %>" class="form-control search-input" placeholder="<%= @category ? "Search under...#{@category.title} " : 'Search the whole store...' %>">
+          <input type="text" name="w" value="<%= params[:w] %>" class="form-control search-input" placeholder="<%= @category ? "Search under #{@category.title} ..." : 'Search the whole store...' %>">
         </div>
         <button type="submit" class="btn btn-default">Search</button>
       <% end %>
