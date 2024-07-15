@@ -1,5 +1,6 @@
 class ShoppingCart < ApplicationRecord
   belongs_to :product
+
   validates :user_uuid, :product_id, :amount, presence: true
 
   scope :by_user_uuid, ->(user_uuid) { where(user_uuid: user_uuid) }
