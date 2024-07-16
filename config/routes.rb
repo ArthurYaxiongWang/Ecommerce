@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     scope 'profile' do
       controller :profile do
         get :password
-        put :update_password
+        put :update_password, as: :update_password
       end
     end
 
