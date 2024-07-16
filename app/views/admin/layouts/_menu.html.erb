@@ -16,6 +16,9 @@
         <li><a href="<%= admin_products_path %>">Products</a></li>
         <li><a href="<%= edit_admin_about_path(About.first_or_create) %>">About</a></li>
         <li><a href="<%= edit_admin_contact_path(Contact.first_or_create) %>">Contact</a></li>
+        <% if admin_user_signed_in? %>
+          <li><%= link_to 'Logout', destroy_admin_user_session_path, method: :delete %></li>
+        <% end %>
       </ul>
     </div>
   </div>

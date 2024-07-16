@@ -6,8 +6,8 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= stylesheet_link_tag "admin", media: "all" %>
-  <%= javascript_pack_tag 'admin', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag "admin", media: "all", 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= yield :stylesheets %>
 </head>
 
@@ -20,8 +20,6 @@
     <%= yield %>
   </div>
 
-  <%= javascript_pack_tag 'admin', type: 'module', crossorigin: 'anonymous' %>
   <%= yield :javascripts %>
 </body>
 </html>
- 
