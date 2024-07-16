@@ -1,14 +1,15 @@
-<h1>Confirm order</h1>
+<h1>Order Invoice</h1>
 <div class="row">
   <div class="container">
     <%= form_with(model: @order, url: orders_path, local: true) do |form| %>
       <div class="page-header">
         <h4>Delivery address:</h4>
-        <%= link_to "Manage Addresses", addresses_path, class: "btn btn-info btn-xs manage-addresses-btn" %>
-      </div>
-      <div class="form-group">
-        <%= form.label :address_id, "Select Address" %>
-        <%= form.collection_select :address_id, @addresses, :id, :full_address, prompt: "Select Address", class: "form-control" %>
+        <% if @default_address.present? %>
+          <p><%= @default_address.full_address %></p>
+          <%= form.hidden_field :address_id, value: @default_address.id %>
+        <% else %>
+          <p>No default address set. Please <%= link_to "add an address", new_address_path %>.</p>
+        <% end %>
       </div>
 
       <div class="page-header">
@@ -36,7 +37,30 @@
 
       <div class="clearfix"></div>
       <br />
-      <%= form.submit "Place Order", class: "btn btn-primary" %>
+
+      <div class="form-group">
+        <label>Total Price</label>
+        <p><%= @shopping_cart.total_price %></p>
+      </div>
+
+      <div class="form-group">
+        <label>PST</label>
+        <p><%= @pst %></p>
+      </div>
+      <div class="form-group">
+        <label>GST</label>
+        <p><%= @gst %></p>
+      </div>
+      <div class="form-group">
+        <label>HST</label>
+        <p><%= @hst %></p>
+      </div>
+      <div class="form-group">
+        <label>Total Price with Taxes</label>
+        <p><%= @total_price_with_taxes %></p>
+      </div>
+
+      <%= form.hidden_field :total_price, value: @total_price_with_taxes %>
     <% end %>
   </div>
 </div>

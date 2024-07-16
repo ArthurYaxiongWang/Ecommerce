@@ -11,8 +11,12 @@ class ShoppingCart < ApplicationRecord
     shopping_cart = find_or_create_by(user_uuid: options[:user_uuid], user_id: options[:user_id])
     cond = { product_id: options[:product_id] }
     record = shopping_cart.cart_items.find_or_initialize_by(cond)
-    record.quantity += options[:quantity].to_i
+    record.quantity = options[:quantity].to_i
     record.save!
     record
+  end
+
+  def total_price
+    cart_items.includes(:product).reduce(0) { |sum, cart_item| sum + cart_item.total_price }
   end
 end

@@ -13,7 +13,11 @@ Rails.application.routes.draw do
       put :set_default_address
     end
   end
-  resources :orders
+  resources :orders do
+    collection do
+      get :calculate_taxes
+    end
+  end
   resources :payments, only: [:index] do
     collection do
       get :generate_pay
