@@ -12,13 +12,10 @@
  *
  *= require_tree .
  *= require_self
- *= require bootstrap-sprockets
  */
 
- @import "bootstrap-sprockets";
  @import "bootstrap";
- @import "~bootstrap/scss/bootstrap";
-
  @import 'variables';
  @import 'placeholders';
  @import "home";
+ 
