@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   devise_for :users, controllers: { registrations: 'registrations' }
+  devise_for :admin_users, path: 'admin', controllers: { sessions: 'admin/sessions' }
 
   resources :categories, only: [:show]
   resources :products, only: [:show] do
@@ -42,9 +43,8 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    get 'sessions/new'
-    root 'sessions#new'
-    resources :sessions
+    root 'dashboard#index'
+    resources :sessions, only: [:new, :create, :destroy]
     resources :categories
     resources :products do
       resources :product_images, only: [:index, :create, :destroy, :update]
