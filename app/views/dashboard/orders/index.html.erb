@@ -1,2 +1,33 @@
-<h1>Dashboard::Orders#index</h1>
-<p>Find me in app/views/dashboard/orders/index.html.erb</p>
+<h1>My Orders</h1>
+<div class="row">
+  <div class="container">
+    <% if @orders.any? %>
+      <% @orders.each do |order| %>
+        <div class="media shopping-cart-row">
+          <div class="media-left">
+            <% if order.product.main_product_image.present? %>
+              <%= image_tag order.product.main_product_image.small_image, class: 'media-object', alt: order.product.title %>
+            <% else %>
+              <%= image_tag 'placeholder.png', class: 'media-object', alt: 'No image available' %>
+            <% end %>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">Order No: <%= order.order_no %></h4>
+            <p><%= order.product.title %></p>
+            <p>Quantity: <%= order.amount %> Price: ¥<%= order.total_price %></p>
+            <p>
+              <span class="label <%= order.is_paid? ? 'label-success' : 'label-warning' %>">
+                <%= order.is_paid? ? 'Paid' : 'Unpaid' %>
+              </span>
+              <%= order.address.contact_name %> <%= order.address.cellphone %> <%= order.address.address %>
+            </p>
+          </div>
+        </div>
+      <% end %>
+
+      <%= paginate @orders %>
+    <% else %>
+      <p>You have no orders.</p>
+    <% end %>
+  </div>
+</div>

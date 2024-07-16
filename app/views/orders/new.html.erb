@@ -1,44 +1,42 @@
 <h1>Confirm order</h1>
 <div class="row">
   <div class="container">
-    <div class="page-header">
-      <h4>Delivery address:</h4>
-      <%= link_to "Manage Addresses", addresses_path, class: "btn btn-info btn-xs manage-addresses-btn" %>
-    </div>
-    <div id="address_list">
-      <%= form_with(model: @order, local: true) do |form| %>
-        <div class="form-group">
-          <%= form.label :address_id, "Select Address" %>
-          <%= form.collection_select :address_id, @addresses, :id, :full_address, prompt: "Select Address", class: "form-control" %>
-        </div>
+    <%= form_with(model: @order, url: orders_path, local: true) do |form| %>
+      <div class="page-header">
+        <h4>Delivery address:</h4>
+        <%= link_to "Manage Addresses", addresses_path, class: "btn btn-info btn-xs manage-addresses-btn" %>
+      </div>
+      <div class="form-group">
+        <%= form.label :address_id, "Select Address" %>
+        <%= form.collection_select :address_id, @addresses, :id, :full_address, prompt: "Select Address", class: "form-control" %>
+      </div>
 
-        <div class="page-header">
-          <h4>Items:</h4>
-        </div>
-        <% if @shopping_cart && @shopping_cart.cart_items.any? %>
-          <% @shopping_cart.cart_items.each do |cart_item| %>
-            <div class="media shopping-cart-row">
-              <div class="media-left">
-                <% if cart_item.product.main_product_image.present? %>
-                  <%= image_tag cart_item.product.main_product_image.small_image, class: 'media-object', alt: cart_item.product.title %>
-                <% else %>
-                  <%= image_tag 'placeholder.png', class: 'media-object', alt: 'No image available' %>
-                <% end %>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading"><%= cart_item.product.title %></h4>
-                Quantity: <%= cart_item.quantity %> Price: $<%= cart_item.total_price %>
-              </div>
+      <div class="page-header">
+        <h4>Items:</h4>
+      </div>
+      <% if @shopping_cart && @shopping_cart.cart_items.any? %>
+        <% @shopping_cart.cart_items.each do |cart_item| %>
+          <div class="media shopping-cart-row">
+            <div class="media-left">
+              <% if cart_item.product.main_product_image.present? %>
+                <%= image_tag cart_item.product.main_product_image.small_image, class: 'media-object', alt: cart_item.product.title %>
+              <% else %>
+                <%= image_tag 'placeholder.png', class: 'media-object', alt: 'No image available' %>
+              <% end %>
             </div>
-          <% end %>
-        <% else %>
-          <p>No items in your cart.</p>
+            <div class="media-body">
+              <h4 class="media-heading"><%= cart_item.product.title %></h4>
+              Quantity: <%= cart_item.quantity %> Price: $<%= cart_item.total_price %>
+            </div>
+          </div>
         <% end %>
-
-        <div class="clearfix"></div>
-        <br />
-        <%= form.submit "Place Order", class: "btn btn-primary" %>
+      <% else %>
+        <p>No items in your cart.</p>
       <% end %>
-    </div>
+
+      <div class="clearfix"></div>
+      <br />
+      <%= form.submit "Place Order", class: "btn btn-primary" %>
+    <% end %>
   </div>
 </div>
