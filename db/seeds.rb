@@ -1,6 +1,5 @@
 require 'faker'
 
-# Destroy existing records to avoid duplication
 ProductImage.destroy_all
 Product.destroy_all
 Category.destroy_all
@@ -8,21 +7,17 @@ Province.destroy_all
 User.destroy_all
 Address.destroy_all
 
-# Create Parent Categories
 console_category = Category.create!(title: "Console")
 pc_category = Category.create!(title: "PC")
 
-# Create Sub-Categories for Console
 ps5_category = Category.create!(title: "PS5", parent: console_category)
 xbox_category = Category.create!(title: "Xbox", parent: console_category)
 switch_category = Category.create!(title: "Switch", parent: console_category)
 
-# Create Sub-Categories for PC
 headsets_category = Category.create!(title: "Headsets", parent: pc_category)
 keyboards_category = Category.create!(title: "Keyboards and Mice", parent: pc_category)
 chairs_category = Category.create!(title: "Gaming Chairs", parent: pc_category)
 
-# Create Provinces
 provinces = [
   { name: 'Alberta' },
   { name: 'British Columbia' },
@@ -43,7 +38,6 @@ provinces.each do |province|
   Province.create!(province)
 end
 
-# Create Products
 categories = [
   ps5_category,
   xbox_category,
@@ -66,7 +60,6 @@ categories = [
   )
 end
 
-# Create Users with Addresses
 10.times do
   ActiveRecord::Base.transaction do
     user = User.new(
@@ -80,7 +73,7 @@ end
     if user.save
       address = Address.create!(
         user: user,
-        address_type: 'billing', # or 'shipping' based on your requirements
+        address_type: 'billing',
         street: Faker::Address.street_address,
         city: Faker::Address.city,
         province: user.province,

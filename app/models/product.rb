@@ -1,4 +1,3 @@
-# app/models/product.rb
 class Product < ApplicationRecord
   validates :category_id, presence: { message: "Category can't be blank" }
   validates :title, presence: { message: "Title can't be blank" }
