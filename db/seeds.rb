@@ -1,5 +1,6 @@
 require 'faker'
 
+# Destroy all records to start fresh
 ProductImage.destroy_all
 Product.destroy_all
 Category.destroy_all
@@ -7,7 +8,7 @@ Province.destroy_all
 User.destroy_all
 Address.destroy_all
 
-
+# Create Categories
 console_category = Category.create!(title: "Console")
 pc_category = Category.create!(title: "PC")
 ps5_category = Category.create!(title: "PS5", parent: console_category)
@@ -17,6 +18,7 @@ headsets_category = Category.create!(title: "Headsets", parent: pc_category)
 keyboards_category = Category.create!(title: "Keyboards and Mice", parent: pc_category)
 chairs_category = Category.create!(title: "Gaming Chairs", parent: pc_category)
 
+# Create Provinces
 provinces = [
   { name: 'Alberta' },
   { name: 'British Columbia' },
@@ -37,6 +39,7 @@ provinces.each do |province|
   Province.create!(province)
 end
 
+# List of categories for products
 categories = [
   ps5_category,
   xbox_category,
@@ -46,6 +49,7 @@ categories = [
   chairs_category
 ]
 
+# Create Products
 100.times do
   Product.create!(
     title: Faker::Commerce.product_name,
@@ -59,6 +63,7 @@ categories = [
   )
 end
 
+# Create Users and Addresses
 10.times do
   ActiveRecord::Base.transaction do
     user = User.new(
@@ -72,7 +77,6 @@ end
     if user.save
       address = Address.create!(
         user: user,
-        address_type: 'billing',
         address_type: 'billing',
         street: Faker::Address.street_address,
         city: Faker::Address.city,

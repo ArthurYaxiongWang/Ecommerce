@@ -15,6 +15,8 @@ class User < ApplicationRecord
   validates :address, presence: true
   validates :default_address_id, presence: true
 
+  attr_accessor :skip_default_address_validation
+
   def username
     email.present? ? email.split("@").first : ""
   end
