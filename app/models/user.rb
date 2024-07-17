@@ -16,8 +16,4 @@ class User < ApplicationRecord
   def username
     email.present? ? email.split("@").first : ""
   end
-
-  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :crypted_password, presence: true
-  validates :uuid, presence: true, uniqueness: true
 end
