@@ -8,6 +8,11 @@ class User < ApplicationRecord
   has_many :orders
   has_many :addresses, -> { where(address_type: Address::AddressType::User).order("id desc") }
 
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :province_id, presence: true
+  validates :address, presence: true
+  validates :default_address_id, presence: true
+
   def username
     email.present? ? email.split("@").first : ""
   end
