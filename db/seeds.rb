@@ -7,13 +7,12 @@ Province.destroy_all
 User.destroy_all
 Address.destroy_all
 
+
 console_category = Category.create!(title: "Console")
 pc_category = Category.create!(title: "PC")
-
 ps5_category = Category.create!(title: "PS5", parent: console_category)
 xbox_category = Category.create!(title: "Xbox", parent: console_category)
 switch_category = Category.create!(title: "Switch", parent: console_category)
-
 headsets_category = Category.create!(title: "Headsets", parent: pc_category)
 keyboards_category = Category.create!(title: "Keyboards and Mice", parent: pc_category)
 chairs_category = Category.create!(title: "Gaming Chairs", parent: pc_category)
@@ -73,6 +72,7 @@ end
     if user.save
       address = Address.create!(
         user: user,
+        address_type: 'billing',
         address_type: 'billing',
         street: Faker::Address.street_address,
         city: Faker::Address.city,

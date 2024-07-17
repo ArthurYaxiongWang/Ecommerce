@@ -6,7 +6,7 @@ class Dashboard::ProfileController < Dashboard::BaseController
   def update_password
     if current_user.valid_password?(params[:old_password])
       if current_user.update(user_params)
-        bypass_sign_in(current_user) # This is necessary to avoid session expiration after password change
+        bypass_sign_in(current_user) 
         flash[:notice] = "Successfully updated password"
         redirect_to dashboard_password_path
       else
