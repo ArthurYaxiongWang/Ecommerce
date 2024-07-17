@@ -5,6 +5,8 @@ class Address < ApplicationRecord
   validates :cellphone, presence: { message: "Cellphone cannot be blank" }
   validates :address, presence: { message: "Address cannot be blank" }
   validates :province_id, presence: { message: "Province cannot be blank" }
+  validates :zip_code, format: { with: /\A\d{5}(-\d{4})?\z/, message: "Invalid ZIP code format" }
+  validates :cellphone, format: { with: /\A\+?[0-9]*\z/, message: "Invalid phone number format" }
 
   belongs_to :user
   belongs_to :province
