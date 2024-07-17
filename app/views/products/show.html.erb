@@ -6,9 +6,9 @@
     <ol class="breadcrumb">
       <li><a href="<%= root_path %>">Home</a></li>
       <% if @product.category.parent %>
-        <li class="active"><%= @product.category.parent.title %></li>
+        <li><%= link_to @product.category.parent.title, category_path(@product.category.parent) %></li>
       <% end %>
-      <li><a href="<%= category_path @product.category %>"><%= @product.category.title %></a></li>
+      <li><%= link_to @product.category.title, category_path(@product.category) %></li>
       <li class="active"><%= @product.title %></li>
     </ol>
     <h1><%= @product.title %></h1>
@@ -31,7 +31,7 @@
       <li>Stock: <%= @product.amount %></li>
     </ul>
     <h3><strong>$<%= @product.price %></strong> <span class="msrp">$<%= @product.msrp %></span></h3>
-    <p>Quantity: <input type="text" name="amount" value="1" /></p>
+    <p>Quantity: <input type="number" name="amount" value="1" min="1" /></p>
     <p><%= show_add_to_cart @product %></p>
 
     <br />
@@ -44,7 +44,4 @@
       <%= @product.description.html_safe %>
     </div>
   </div>
-
-  <br />
-  <br />
 </div>

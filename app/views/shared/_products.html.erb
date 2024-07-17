@@ -12,7 +12,16 @@
         <div class="caption">
           <h4><%= link_to product.title, product_path(product), class: 'title' %></h4>
           <p><strong>$<%= product.price %></strong> <span class="msrp">$<%= product.msrp %></span></p>
-          <p><%= show_add_to_cart product, html_class: "btn-xs"%></p>
+          <div>
+            <form class="button_to" method="post" action="/shopping_carts">
+              <button class="btn btn-danger add-to-cart-btn btn-xs" type="submit">
+                <i class='fa fa-spinner'></i> Add to cart
+              </button>
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+              <input type="hidden" name="amount" value="1">
+              <input type="hidden" name="product_id" value="<%= product.id %>">
+            </form>
+          </div>
         </div>
       </div>
     </div>
