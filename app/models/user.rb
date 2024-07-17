@@ -1,6 +1,8 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  unless ENV['RAILS_DOCKER_BUILD']
+    devise :database_authenticatable, :registerable,
+           :recoverable, :rememberable, :validatable
+  end
 
   belongs_to :province
   belongs_to :default_address, class_name: :Address, optional: true

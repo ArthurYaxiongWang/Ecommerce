@@ -1,38 +1,57 @@
-# Dockerfile
+# Use the official Ruby image from the Docker Hub
 FROM ruby:3.3.0
 
 # Install dependencies
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev curl
+
+# Install Node.js and npm
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+
+# Verify that Node.js and npm are installed
+RUN node -v
+RUN npm -v
 
 # Install Yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update && apt-get install -y yarn
+RUN npm install -g yarn
 
-# Set environment variables
-ARG SECRET_KEY_BASE
-ENV RAILS_ENV=production
-ENV BUNDLE_PATH=/bundle
-ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
+# Verify that Yarn is installed
+RUN yarn -v
 
-# Create and set the working directory
-RUN mkdir /app
-WORKDIR /app
+# Set an environment variable to store where the app is installed inside the Docker image
+ENV RAILS_ROOT=/myapp
+RUN mkdir -p $RAILS_ROOT
+
+# Set working directory
+WORKDIR $RAILS_ROOT
+
+# Gems and node_modules will be installed here
+ENV BUNDLE_PATH=/gems
+ENV GEM_HOME=/gems
+ENV BUNDLE_APP_CONFIG=/gems
 
 # Copy the Gemfile and Gemfile.lock into the image
 COPY Gemfile Gemfile.lock ./
 
-# Install gems
-RUN gem install bundler && bundle install --verbose
+# Install the dependencies
+RUN gem install bundler -v 2.5.14
+RUN bundle install
 
-# Copy the rest of the application code
+# Copy package.json and yarn.lock
+COPY package.json yarn.lock ./
+
+# Install node dependencies
+RUN yarn install
+
+# Copy the rest of the application code into the image
 COPY . .
 
-# Precompile assets
-RUN bundle exec rails assets:precompile
+# Precompile assets with debug output
+RUN echo "Running assets:precompile"
+RUN bundle exec rake assets:precompile --trace || (echo "Precompile failed" && exit 1)
 
-# Expose port
+# Expose the port that Puma will listen on
 EXPOSE 3000
 
-# Start the Rails server
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+# Start the main process
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

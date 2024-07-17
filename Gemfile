@@ -91,3 +91,7 @@ gem 'devise', '~> 4.8', '>= 4.8.1'
 gem 'pg', '~> 1.2', '>= 1.2.3'
 
 gem 'webpacker', '~> 5.4', '>= 5.4.3'
+
+gem "dockerfile-rails", ">= 1.6", :group => :development
+
+gem "aws-sdk-s3", "~> 1.156", :require => false

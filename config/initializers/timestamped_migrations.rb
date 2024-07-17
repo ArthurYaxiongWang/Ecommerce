@@ -1,3 +1,4 @@
+unless ENV['RAILS_DOCKER_BUILD']
 module TimestampedMigrations
   def timestamped_migrations
     # Example logic for managing timestamped migrations
@@ -12,4 +13,5 @@ end
 
 ActiveSupport.on_load(:active_record) do
   ActiveRecord::Base.extend(TimestampedMigrations)
+end
 end
