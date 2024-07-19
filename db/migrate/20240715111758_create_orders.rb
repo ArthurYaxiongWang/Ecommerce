@@ -10,7 +10,12 @@ class CreateOrders < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :orders, [:user_id]
-    add_index :orders, [:order_no], unique: true
+    unless index_exists?(:orders, :user_id)
+      add_index :orders, :user_id
+    end
+
+    unless index_exists?(:orders, :order_no, unique: true)
+      add_index :orders, :order_no, unique: true
+    end
   end
 end

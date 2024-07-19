@@ -6,6 +6,7 @@ class Order < ApplicationRecord
   has_many :products, through: :order_items
 
   validates :user_id, :address_id, :total_price, :amount, :order_no, presence: true
+  validates :order_no, uniqueness: true
 
   before_create :gen_order_no
 

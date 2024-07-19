@@ -8,22 +8,20 @@ class ShoppingCartsController < ApplicationController
 
   def create
     amount = params[:amount].to_i
-    amount = amount <= 0 ? 1 : amount
+    user_id = current_user ? current_user.id : nil
 
-    @product = Product.find(params[:product_id])
     @cart_item = ShoppingCart.create_or_update({
       user_uuid: session[:user_uuid],
-      user_id: current_user.id,
+      user_id: user_id,
       product_id: params[:product_id],
       quantity: amount
     })
 
-    if @cart_item.errors.any?
-      Rails.logger.info @cart_item.errors.full_messages
+    if @cart_item.save
+      redirect_to shopping_carts_path, notice: 'Product added to cart successfully.'
+    else
+      redirect_to products_path, alert: 'Failed to add product to cart.'
     end
-
-    fetch_home_data  # Update the shopping cart count after adding an item
-    redirect_to shopping_carts_path
   end
 
   def update

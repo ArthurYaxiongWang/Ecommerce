@@ -53,5 +53,12 @@ RUN bundle exec rake assets:precompile --trace || (echo "Precompile failed" && e
 # Expose the port that Puma will listen on
 EXPOSE 3000
 
-# Start the main process
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+# Copy the entrypoint script
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+
+# Set the entrypoint
+ENTRYPOINT ["entrypoint.sh"]
+
+# Command to start the server
+CMD ["bin/rails", "server", "-b", "0.0.0.0"]
