@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     end
     resources :abouts, only: [:edit, :update]
     resources :contacts, only: [:edit, :update]
+    resources :orders, only: [:index]
   end
 
   get '/about', to: 'abouts#show', as: :about

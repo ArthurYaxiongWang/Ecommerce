@@ -1,0 +1,39 @@
+<h1>All Customer Orders</h1>
+
+<% @orders.each do |order| %>
+  <div class="order">
+    <h3>Order No: <%= order.order_no %> by User <%= order.user.email %></h3>
+    <% order.order_items.each do |order_item| %>
+      <div class="order-item">
+        <div class="media">
+          <div class="media-left">
+            <% if order_item.product.main_product_image.present? %>
+              <%= image_tag order_item.product.main_product_image.small_image, class: 'media-object', alt: order_item.product.title %>
+            <% else %>
+              <%= image_tag 'placeholder.png', class: 'media-object', alt: 'No image available' %>
+            <% end %>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading"><%= order_item.product.title %></h4>
+            Quantity: <%= order_item.quantity %> Price: $<%= order_item.total_price %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% 
+      total_price = order.order_items.sum { |item| item.product.price * item.quantity }
+      province_name = order.address.province.name
+      taxes = calculate_taxes(total_price, province_name)
+      total_price_with_taxes = total_price + taxes[:pst] + taxes[:gst] + taxes[:hst]
+    %>
+    <p>Total Price: $<%= total_price %></p>
+    <p>PST: $<%= taxes[:pst] %></p>
+    <p>GST: $<%= taxes[:gst] %></p>
+    <p>HST: $<%= taxes[:hst] %></p>
+    <p>Total Price with Taxes: $<%= total_price_with_taxes %></p>
+    <p>User: <%= order.user.email %></p>
+    <p>Address: <%= order.address.full_address %></p>
+  </div>
+  <hr>
+<% end %>
