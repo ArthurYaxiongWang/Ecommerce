@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
     shopping_cart = ShoppingCart.by_user_uuid(session[:user_uuid]).first
 
     if shopping_cart.blank?
-      Rails.logger.error "No shopping cart found"
+      Rails.logger.error "No shopping cart found for user_uuid: #{session[:user_uuid]}"
       flash[:alert] = "No shopping cart found"
       redirect_to new_order_path and return
     end
@@ -27,7 +27,7 @@ class OrdersController < ApplicationController
     Rails.logger.debug "Shopping cart items: #{shopping_cart_items.inspect}"
 
     if shopping_cart_items.blank?
-      Rails.logger.error "No items in shopping cart"
+      Rails.logger.error "No items in shopping cart for user_uuid: #{session[:user_uuid]}"
       flash[:alert] = "No items in shopping cart"
       redirect_to new_order_path and return
     end
@@ -36,7 +36,7 @@ class OrdersController < ApplicationController
       ActiveRecord::Base.transaction do
         order = current_user.orders.create!(
           address_id: order_params[:address_id],
-          total_price: shopping_cart.total_price,
+          total_price: shopping_cart_items.sum { |item| item.product.price * item.quantity },
           amount: shopping_cart_items.sum(:quantity),
           order_no: SecureRandom.hex(10),
           paid_at: Time.now
@@ -53,6 +53,7 @@ class OrdersController < ApplicationController
         end
 
         shopping_cart_items.destroy_all
+        Rails.logger.debug "Shopping cart items after destroy: #{shopping_cart.cart_items.inspect}"
         redirect_to dashboard_orders_path, notice: 'Order was successfully created.'
       end
     rescue => e

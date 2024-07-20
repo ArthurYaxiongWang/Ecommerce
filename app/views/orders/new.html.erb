@@ -61,6 +61,7 @@
       </div>
 
       <%= form.hidden_field :total_price, value: @total_price_with_taxes %>
+      <%= form.submit 'Place Order', class: 'btn btn-primary' %>
     <% end %>
   </div>
 </div>
