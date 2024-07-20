@@ -20,7 +20,14 @@
         </div>
       </div>
     <% end %>
-    <p>Total Price: $<%= order.total_price %></p>
+
+    <% 
+      total_price = order.order_items.sum { |item| item.product.price * item.quantity }
+      province_name = order.address.province.name
+      taxes = calculate_taxes(total_price, province_name)
+      total_price_with_taxes = total_price + taxes[:pst] + taxes[:gst] + taxes[:hst]
+    %>
+    <p>Total Price with Taxes: $<%= total_price_with_taxes %></p>
     <p><span class="label label-success">Paid</span> User <%= order.user.id %> address <%= order.address.id %></p>
     <%= link_to 'Delete', dashboard_order_path(order), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
   </div>
