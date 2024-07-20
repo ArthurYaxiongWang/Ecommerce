@@ -2,27 +2,31 @@
 <div class="row">
   <div class="container">
     <% if @orders.any? %>
+      <%= debug @orders %> <!-- Add this line to debug orders -->
       <% @orders.each do |order| %>
-        <div class="media shopping-cart-row">
-          <div class="media-left">
-            <% if order.product.main_product_image.present? %>
-              <%= image_tag order.product.main_product_image.small_image, class: 'media-object', alt: order.product.title %>
-            <% else %>
-              <%= image_tag 'placeholder.png', class: 'media-object', alt: 'No image available' %>
-            <% end %>
+        <% order.order_items.each do |order_item| %>
+          <div class="media shopping-cart-row">
+            <div class="media-left">
+              <% if order_item.product&.main_product_image.present? %>
+                <%= image_tag order_item.product.main_product_image.small_image, class: 'media-object', alt: order_item.product.title %>
+              <% else %>
+                <%= image_tag 'placeholder.png', class: 'media-object', alt: 'No image available' %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Order No: <%= order.order_no %></h4>
+              <p><%= order_item.product.title %></p>
+              <p>Quantity: <%= order_item.quantity %> Price: $<%= order_item.total_price %></p>
+              <p>
+                <span class="label <%= order.paid_at.present? ? 'label-success' : 'label-warning' %>">
+                  <%= order.paid_at.present? ? 'Paid' : 'Unpaid' %>
+                </span>
+                <%= order.address.contact_name %> <%= order.address.cellphone %> <%= order.address.address %>
+              </p>
+              <%= link_to 'Delete', dashboard_order_path(order), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+            </div>
           </div>
-          <div class="media-body">
-            <h4 class="media-heading">Order No: <%= order.order_no %></h4>
-            <p><%= order.product.title %></p>
-            <p>Quantity: <%= order.amount %> Price: ¥<%= order.total_price %></p>
-            <p>
-              <span class="label <%= order.is_paid? ? 'label-success' : 'label-warning' %>">
-                <%= order.is_paid? ? 'Paid' : 'Unpaid' %>
-              </span>
-              <%= order.address.contact_name %> <%= order.address.cellphone %> <%= order.address.address %>
-            </p>
-          </div>
-        </div>
+        <% end %>
       <% end %>
 
       <%= paginate @orders %>

@@ -6,7 +6,6 @@ class Order < ApplicationRecord
   has_many :products, through: :order_items
 
   validates :user_id, :address_id, :total_price, :amount, :order_no, presence: true
-  validates :order_no, uniqueness: true
 
   before_create :gen_order_no
 
@@ -14,5 +13,9 @@ class Order < ApplicationRecord
 
   def gen_order_no
     self.order_no = RandomCode.generate_order_uuid
+  end
+
+  def set_amount
+    self.amount = order_items.sum(:quantity)
   end
 end

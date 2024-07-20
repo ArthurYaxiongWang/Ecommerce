@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_16_225818) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_20_121940) do
   create_table "abouts", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -107,13 +107,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_16_225818) do
     t.integer "quantity", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "total_price", precision: 10, scale: 2
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["product_id"], name: "index_order_items_on_product_id"
   end
 
   create_table "orders", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "produdct_id"
+    t.integer "product_id"
     t.integer "address_id"
     t.string "order_no"
     t.integer "amount"

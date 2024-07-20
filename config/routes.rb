@@ -38,7 +38,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:index]
+    resources :orders, only: [:index, :destroy]
     resources :addresses, only: [:index]
   end
 

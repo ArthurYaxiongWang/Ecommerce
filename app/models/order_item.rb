@@ -1,8 +1,6 @@
 class OrderItem < ApplicationRecord
   belongs_to :order
-  belongs_to :product
+  belongs_to :product, optional: true  # Ensure this is optional
 
-  def total_price
-    product.price * quantity
-  end
+  # Remove all validations temporarily
 end

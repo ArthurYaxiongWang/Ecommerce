@@ -1,6 +1,11 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user!
   before_action :set_addresses_and_cart, only: [:new, :create]
+
+  def index
+    @orders = current_user.orders.includes(order_items: :product)
+    Rails.logger.debug "Orders loaded: #{@orders.inspect}"
+  end
 
   def new
     @order = Order.new
@@ -9,38 +14,65 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = current_user.orders.new(order_params)
-    shopping_carts = ShoppingCart.by_user_uuid(session[:user_uuid])
+    Rails.logger.debug "Starting order creation for user: #{current_user.id}"
+    shopping_cart = ShoppingCart.by_user_uuid(session[:user_uuid]).first
 
-    ActiveRecord::Base.transaction do
-      if @order.save
-        shopping_carts.each do |cart_item|
-          @order.order_items.create!(
-            product: cart_item.product,
-            quantity: cart_item.amount,
-            total_price: cart_item.product.price * cart_item.amount
-          )
-        end
-        shopping_carts.destroy_all
-        redirect_to @order, notice: 'Order was successfully created.'
-      else
-        render :new
-      end
+    if shopping_cart.blank?
+      Rails.logger.error "No shopping cart found"
+      flash[:alert] = "No shopping cart found"
+      redirect_to new_order_path and return
     end
-  rescue => e
-    flash[:alert] = "There was an error processing your order: #{e.message}"
-    render :new
+
+    shopping_cart_items = shopping_cart.cart_items
+    Rails.logger.debug "Shopping cart items: #{shopping_cart_items.inspect}"
+
+    if shopping_cart_items.blank?
+      Rails.logger.error "No items in shopping cart"
+      flash[:alert] = "No items in shopping cart"
+      redirect_to new_order_path and return
+    end
+
+    begin
+      ActiveRecord::Base.transaction do
+        order = current_user.orders.create!(
+          address_id: order_params[:address_id],
+          total_price: shopping_cart.total_price,
+          amount: shopping_cart_items.sum(:quantity),
+          order_no: SecureRandom.hex(10),
+          paid_at: Time.now
+        )
+        Rails.logger.debug "Order created: #{order.inspect}"
+
+        shopping_cart_items.each do |cart_item|
+          order_item = order.order_items.create!(
+            product: cart_item.product,
+            quantity: cart_item.quantity,
+            total_price: cart_item.product.price * cart_item.quantity
+          )
+          Rails.logger.debug "Order item created: #{order_item.inspect}"
+        end
+
+        shopping_cart_items.destroy_all
+        redirect_to dashboard_orders_path, notice: 'Order was successfully created.'
+      end
+    rescue => e
+      Rails.logger.error "Order creation error: #{e.message}"
+      flash[:alert] = "There was an error processing your order: #{e.message}"
+      render :new
+    end
   end
 
   private
 
   def set_addresses_and_cart
+    Rails.logger.debug "Session user_uuid: #{session[:user_uuid]}"
     @addresses = current_user.addresses
     @shopping_cart = ShoppingCart.by_user_uuid(session[:user_uuid]).includes(cart_items: :product).first
+    Rails.logger.debug "Shopping cart: #{@shopping_cart.inspect}"
   end
 
   def order_params
-    params.require(:order).permit(:address_id, :total_price)
+    params.require(:order).permit(:address_id)
   end
 
   def calculate_taxes_for_default_address

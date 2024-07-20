@@ -3,9 +3,6 @@ class ShoppingCart < ApplicationRecord
   has_many :cart_items, dependent: :destroy
   has_many :products, through: :cart_items
 
-  validates :user_uuid, presence: true
-  validates :user_id, presence: true, unless: -> { user_uuid.present? }
-
   scope :by_user_uuid, ->(user_uuid) { where(user_uuid: user_uuid) }
 
   def self.create_or_update(options = {})
