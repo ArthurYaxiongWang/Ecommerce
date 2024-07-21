@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_addresses_and_cart, only: [:new, :create]
+  protect_from_forgery with: :exception
 
   def index
     @orders = current_user.orders.includes(order_items: :product)
