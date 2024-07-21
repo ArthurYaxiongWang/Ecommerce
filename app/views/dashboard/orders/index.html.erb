@@ -29,7 +29,7 @@
     %>
     <p>Total Price with Taxes: $<%= total_price_with_taxes %></p>
     <p><span class="label label-success">Paid</span> User <%= order.user.email %> address <%= order.address.id %></p>
-    <%= link_to 'Delete', dashboard_order_path(order), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+    <!-- <%= link_to 'Delete', dashboard_order_path(order), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %> -->
   </div>
   <hr>
 <% end %>
