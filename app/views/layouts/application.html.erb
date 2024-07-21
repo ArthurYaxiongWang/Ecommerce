@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>GameMall</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= stylesheet_link_tag 'admin', media: 'all', 'data-turbolinks-track': 'reload' %>
-
-  <%= javascript_importmap_tags %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= yield :stylesheets %>
 </head>
 
@@ -22,8 +20,7 @@
     <%= yield %>
   </div>
 
-  <%= javascript_include_tag 'application', type: 'module', crossorigin: 'anonymous' %>
   <%= yield :javascripts %>
 </body>
 </html>
- 
+

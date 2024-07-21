@@ -5,9 +5,9 @@
 
   <h1>
     <% if @category %>
-      Category:<%= @category.title %>(<%= @categories.total_entries %>)
+      Category:<%= @category.title %>(<%= @categories.total_count %>)
     <% else %>
-      Category(<%= @categories.total_entries %>)
+      Categories (<%= @categories.total_count %>)
     <% end -%>
   </h1>
 </div>
@@ -36,6 +36,8 @@
       </tr>
     <% end -%>
   </table>
+</div>
 
-  <%= will_paginate @categories %>
+<div class="pagination">
+  <%= paginate @categories %>
 </div>

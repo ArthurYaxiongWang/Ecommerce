@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h2>Contact Us</h2>
+    <% if @contact.present? %>
+      <p><%= simple_format(@contact.content) %></p>
+    <% else %>
+      <p>Contact page content not available.</p>
+    <% end %>
+  </div>
+</div>

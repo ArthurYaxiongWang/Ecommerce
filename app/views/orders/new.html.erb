@@ -1,0 +1,67 @@
+<h1>Order Invoice</h1>
+<div class="row">
+  <div class="container">
+    <%= form_with(model: @order, url: orders_path, local: true) do |form| %>
+      <div class="page-header">
+        <h4>Delivery address:</h4>
+        <% if @default_address.present? %>
+          <p><%= @default_address.full_address %></p>
+          <%= form.hidden_field :address_id, value: @default_address.id %>
+        <% else %>
+          <p>No default address set. Please <%= link_to "add an address", new_address_path %>.</p>
+        <% end %>
+      </div>
+
+      <div class="page-header">
+        <h4>Items:</h4>
+      </div>
+      <% if @shopping_cart && @shopping_cart.cart_items.any? %>
+        <% @shopping_cart.cart_items.each do |cart_item| %>
+          <div class="media shopping-cart-row">
+            <div class="media-left">
+              <% if cart_item.product.main_product_image.present? %>
+                <%= image_tag cart_item.product.main_product_image.small_image, class: 'media-object', alt: cart_item.product.title %>
+              <% else %>
+                <%= image_tag 'placeholder.png', class: 'media-object', alt: 'No image available' %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><%= cart_item.product.title %></h4>
+              Quantity: <%= cart_item.quantity %> Price: $<%= cart_item.total_price %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p>No items in your cart.</p>
+      <% end %>
+
+      <div class="clearfix"></div>
+      <br />
+
+      <div class="form-group">
+        <label>Total Price</label>
+        <p><%= @shopping_cart.total_price %></p>
+      </div>
+
+      <div class="form-group">
+        <label>PST</label>
+        <p><%= @pst %></p>
+      </div>
+      <div class="form-group">
+        <label>GST</label>
+        <p><%= @gst %></p>
+      </div>
+      <div class="form-group">
+        <label>HST</label>
+        <p><%= @hst %></p>
+      </div>
+      <div class="form-group">
+        <label>Total Price with Taxes</label>
+        <p><%= @total_price_with_taxes %></p>
+      </div>
+
+      <%= form.hidden_field :total_price, value: @total_price_with_taxes %>
+      <%= form.submit 'Place Order', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

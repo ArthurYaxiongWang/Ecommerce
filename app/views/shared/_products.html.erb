@@ -4,15 +4,24 @@
       <div class="thumbnail">
         <%= link_to product_path(product) do %>
           <% if product.product_images.any? %>
-            <%= image_tag product.product_images.first.image.variant(resize_to_fill: [200, 200]), alt: product.title %>
+            <%= image_tag product.product_images.first.medium_image, alt: product.title %>
           <% else %>
             <%= image_tag 'default_image.png', alt: product.title %>
           <% end %>
         <% end %>
         <div class="caption">
           <h4><%= link_to product.title, product_path(product), class: 'title' %></h4>
-          <p><strong><%= product.price %></strong> <span class="msrp"><%= product.msrp %></span></p>
-          <p><a href="#" class="btn btn-danger btn-sm" role="button">加入购物车</a></p>
+          <p><strong>$<%= product.price %></strong> <span class="msrp">$<%= product.msrp %></span></p>
+          <div>
+            <form class="button_to" method="post" action="/shopping_carts">
+              <button class="btn btn-danger add-to-cart-btn btn-xs" type="submit">
+                 Add to cart
+              </button>
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+              <input type="hidden" name="amount" value="1">
+              <input type="hidden" name="product_id" value="<%= product.id %>">
+            </form>
+          </div>
         </div>
       </div>
     </div>

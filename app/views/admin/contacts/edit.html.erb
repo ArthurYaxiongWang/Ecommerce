@@ -1,0 +1,9 @@
+<h1>Edit Contact Page</h1>
+<%= form_with(model: [:admin, @contact], local: true) do |form| %>
+  <div class="field">
+    <%= form.text_area :content, rows: 20, cols: 80 %>
+  </div>
+  <div class="actions">
+    <%= form.submit 'Update' %>
+  </div>
+<% end %>

@@ -1,0 +1,6 @@
+<div class="pull-right">
+  <%= link_to "Add address", new_address_path, class: "btn btn-info btn-xs new-address-btn" %>
+</div>
+<div class="clearfix"></div>
+<br />
+<%= render partial: 'addresses/address_list', locals: { addresses: @addresses, current_user: current_user } %>

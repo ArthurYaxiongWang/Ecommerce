@@ -4,7 +4,7 @@
   </div>
 
   <h1>
-      Product(<%= @products.total_entries %>)
+    Products (<%= @products.total_count %>)
   </h1>
 </div>
 
@@ -38,6 +38,8 @@
       </tr>
     <% end -%>
   </table>
+</div>
 
-  <%= will_paginate @products %>
+<div class="pagination">
+  <%= paginate @products %>
 </div>

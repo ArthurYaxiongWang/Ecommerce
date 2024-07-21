@@ -10,7 +10,7 @@ class Admin::CategoriesController < Admin::BaseController
       @categories = @category.children
     end
 
-    @categories = @categories.page(params[:page] || 1).per_page(params[:per_page] || 10).order(id: "desc")
+    @categories = @categories.page(params[:page] || 1).per(params[:per_page] || 10).order(id: "desc")
   end
 
   def new

@@ -4,7 +4,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(params.require(:user).permit(:email, :password, :password_confirmation))
+
+    @user.uuid = session[:user_uuid]
 
     if @user.save
       flash[:notice] = "Signed up successfully! Please sign in."

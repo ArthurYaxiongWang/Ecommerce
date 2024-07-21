@@ -1,22 +1,23 @@
 class User < ApplicationRecord
-  authenticates_with_sorcery!
-
-  attr_accessor :password, :password_confirmation
-
-  validates :email, presence: { message: "can't be blank" }, uniqueness: true
-  validates_format_of :email, with: /\A[^@\s]+@[^@\s]+\z/, message: "must be a valid email address", if: proc { |user| user.email.present? }
-
-  validates :password, presence: { message: "can't be blank" }, length: { minimum: 6, message: "must be at least 6 characters" }, if: :need_validate_password
-  validates :password_confirmation, presence: { message: "can't be blank" }, if: :need_validate_password
-  validates_confirmation_of :password, message: "doesn't match", if: :need_validate_password
-
-  def username
-    self.email.split("@").first
+  unless ENV['RAILS_DOCKER_BUILD']
+    devise :database_authenticatable, :registerable,
+           :recoverable, :rememberable, :validatable
   end
 
-  private
+  belongs_to :province
+  belongs_to :default_address, class_name: :Address, optional: true
 
-  def need_validate_password
-    new_record? || password.present? || password_confirmation.present?
+  has_many :orders
+  has_many :addresses, -> { where(address_type: Address::AddressType::User).order("id desc") }
+
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :province_id, presence: true
+  validates :address, presence: true
+  validates :default_address_id, presence: true
+
+  attr_accessor :skip_default_address_validation
+
+  def username
+    email.present? ? email.split("@").first : ""
   end
 end

@@ -1,0 +1,14 @@
+<h1>Search Results</h1>
+
+<% if @products.any? %>
+  <ul>
+    <% @products.each do |product| %>
+      <li>
+        <h3><%= link_to product.title, product_path(product) %></h3>
+        <p><%= product.description %></p>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No products found</p>
+<% end %>

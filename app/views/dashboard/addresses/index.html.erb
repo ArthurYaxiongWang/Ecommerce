@@ -1,0 +1,18 @@
+<h1>My Addresses</h1>
+<div class="row">
+  <div class="container">
+    <div id="address_list">
+
+    </div>
+  </div>
+</div>
+
+<%= content_for :javascripts do %>
+  <script>
+    $(document).ready(function() {
+      $.get('/addresses.js', function(data) {
+        $('#address_list').html(data);
+      });
+    });
+  </script>
+<% end %>

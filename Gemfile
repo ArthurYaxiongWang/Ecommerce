@@ -81,3 +81,17 @@ gem 'ancestry', '~> 4.0.0'
 gem 'jquery-rails', '~> 4.4.0'
 
 gem 'kaminari', '~> 1.2', '>= 1.2.1'
+
+gem 'faker', '~> 2.15', '>= 2.15.1'
+
+gem 'rails-ujs', '~> 0.1.0'
+
+gem 'devise', '~> 4.8', '>= 4.8.1'
+
+gem 'pg', '~> 1.2', '>= 1.2.3'
+
+gem 'webpacker', '~> 5.4', '>= 5.4.3'
+
+gem "dockerfile-rails", ">= 1.6", :group => :development
+
+gem "aws-sdk-s3", "~> 1.156", :require => false

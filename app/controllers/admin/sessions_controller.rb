@@ -1,4 +1,3 @@
-class Admin::SessionsController < Admin::BaseController
-  def new
-  end
+class Admin::SessionsController < Devise::SessionsController
+  layout 'admin/application'
 end

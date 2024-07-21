@@ -39,3 +39,9 @@ node_modules/
 
 # Ignore Webpack build output
 public/packs/
+public/packs-test
+
+# Ignore yarn error and debug logs
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

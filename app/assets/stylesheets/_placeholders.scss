@@ -1,0 +1,14 @@
+@import 'variables'; 
+
+%button-style {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+%input-style {
+  padding: 8px;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+}
